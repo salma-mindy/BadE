@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 26 juin 2020 à 19:13
+-- Généré le : sam. 27 juin 2020 à 15:54
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.6
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `danger`
+-- Base de données : `bad_event`
 --
 
 -- --------------------------------------------------------
@@ -186,7 +186,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `intituleRole`, `description`) VALUES
 (1, 'ROLE_ADMIN', 'Super admin'),
-(2, 'ROLE_OPERATEUR', 'opérateur');
+(2, 'ROLE_OPERATEUR', 'opérateur'),
+(3, 'ROLE_SUPERVISEUR', 'Superviseur');
 
 -- --------------------------------------------------------
 
@@ -223,7 +224,11 @@ INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `genre`, `contact`, `adresse`
 (30, 'Aka', 'Lory', 'Feminin', '87147883', 'Niangon, Yopougon', 'loryaka@gmail.com', '$2y$10$G30tPI7Xst/h4dzWSlYkuedoV4Fl//rreWoTtuVj.r0.5rl4JygQO', '2020-06-20 15:36:37', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
 (32, 'Meli', 'Anoa Melissa', 'Feminin', '43009312', 'Niangon, Yopougon', 'melissa@gmail.com', '$2y$10$z9cEY5Dq4CRZ3debUiBGxeVgIr/Njilo5aJ09d7CXCEqjxgbsCYCe', '2020-06-20 15:45:32', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
 (33, 'test2', 'Loriane', 'Feminin', '85154865', 'Niangon, Yopougon', 'teste0@gmail.com', '$2y$10$3Ax1NMsGTUIR33V.ONTLI.oAXhXrbbggFX2KOPJ6Onkv0um/JI7cO', '2020-06-20 15:58:07', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
-(35, 'Opérateur', 'koné', 'Masculin', '05285478', 'Bouaflé, CI', 'kouame@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0);
+(35, 'Opérateu', 'koné', 'Masculin', '05285478', 'Bouaflé, CI', 'kouame@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
+(36, 'Meli', 'Anoa Melissa', 'Feminin', '43009312', 'Niangon, Yopougon', 'melissa@gmail.com', '$2y$10$z9cEY5Dq4CRZ3debUiBGxeVgIr/Njilo5aJ09d7CXCEqjxgbsCYCe', '2020-06-20 15:45:32', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
+(37, 'test2', 'Loriane', 'Feminin', '85154865', 'Niangon, Yopougon', 'teste0@gmail.com', '$2y$10$3Ax1NMsGTUIR33V.ONTLI.oAXhXrbbggFX2KOPJ6Onkv0um/JI7cO', '2020-06-20 15:58:07', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
+(38, 'Opérateu', 'koné', 'Masculin', '05285478', 'Bouaflé, CI', 'kouame@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
+(39, 'KOYA', 'Téan benoit', 'Masculin', '08880004', 'Abobo', 'tean.koya@gmail.com', '$2y$10$8VIa4CZ8dOZFeW7QIStJyeuTacQu9QhQ5DJ8K0vioV118NNH5iYOG', '2020-06-27 08:08:50', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -447,13 +452,13 @@ ALTER TABLE `pays`
 -- AUTO_INCREMENT pour la table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pour la table `ville`
