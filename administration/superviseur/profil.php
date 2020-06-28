@@ -74,7 +74,7 @@
                                     <form method="post" class="user" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="text" class="form-control form-control-user" id="nom" name="nom" placeholder="Nom" value="">
+                                                <input type="text" class="form-control form-control-user" id="nom" name="nom" placeholder="Nom" value="<?= $_SESSION["nom"]; ?>">
                                                 <small style="color: #ff1300 !important">
                                                     <span class="align-items-center text-center">
                                                         <center>
@@ -84,7 +84,7 @@
                                                 </small>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control form-control-user" id="prenom" name="prenom" placeholder="Prénom" value="">
+                                                <input type="text" class="form-control form-control-user" id="prenom" name="prenom" placeholder="Prénom" value="<?= $_SESSION["prenom"]; ?>">
                                                 <small style="color: #ff1300 !important">
                                                     <span class="align-items-center text-center">
                                                         <center>
@@ -106,7 +106,7 @@
                                                 </small>
                                             </div>
                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                <input type="text" class="form-control form-control-user" id="adresse" name="adresse" placeholder="Lieu de résidence">
+                                                <input type="text" class="form-control form-control-user" id="adresse" name="adresse" placeholder="Lieu de résidence" value="<?= $_SESSION["adresse"]; ?>">
                                                 <small style="color: #ff1300 !important">
                                                     <span class="align-items-center text-center">
                                                         <center>
@@ -116,7 +116,7 @@
                                                 </small> 
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="tel" class="form-control form-control-user" id="contact" name="contact" placeholder="Numéro Téléphone">
+                                                <input type="tel" class="form-control form-control-user" id="contact" name="contact" placeholder="Numéro Téléphone" value="<?= $_SESSION["contact"]; ?>">
                                                 <small style="color: #ff1300 !important">
                                                     <span class="align-items-center text-center">
                                                         <center>
