@@ -126,7 +126,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                             // Calcul de la première information de la page
                                             $premier = ($currentPage * $parPage) - $parPage;
                                             
-                                            $sql = 'SELECT * FROM dangertype  ORDER BY intitule DESC LIMIT :premier, :parpage;';
+                                            $sql = 'SELECT * FROM dangertype  ORDER BY dateModification DESC LIMIT :premier, :parpage;';
                                             // On prépare la requête
                                             $query = $db->prepare($sql);
 

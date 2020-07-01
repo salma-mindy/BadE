@@ -269,12 +269,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row">
                         <div class="form-group col-md">
-                            <input type="number" name="lng" id="" class="form-control" placeholder="longitude" <?php  if (@$_GET['operation'] == 'modification') {
+                            <input type="number" step="0.000001" name="lng" id="" class="form-control" placeholder="longitude" <?php  if (@$_GET['operation'] == 'modification') {
                                     echo 'value="' .$pays['lng'].'"';
                                 } ?> required> 
                         </div>
                         <div class="form-group col-md">
-                            <input type="number" name="lat" id="" class="form-control" placeholder="latitude" <?php  if (@$_GET['operation'] == 'modification') {
+                            <input type="number" step="0.000001" name="lat" id="" class="form-control" placeholder="latitude" <?php  if (@$_GET['operation'] == 'modification') {
                                     echo 'value="' .$pays['lat'].'"';
                                 } ?> required>
                         </div>
@@ -282,7 +282,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <section class="row">
                         <div class="form-group col-md">
                         <textarea class="form-control form-control-user " rows="5" id="descriptionlieu" name="descriptionlieu" placeholder="Description..." style="resize:none"><?php  if (@$_GET['operation'] == 'modification') {
-                                    echo  $pays['description'];
+                                    echo  $pays['descriptionPays'];
                                 } ?></textarea>
                         </div>
                     </section>
@@ -294,17 +294,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         echo'<label for="image">Nom Image:</label>
                                         <p>'.$pays['img'].'</p>
                                         <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image" required>
+                                        <input type="file" class="custom-file-input" id="image" name="image">
                                         <label for="image" class="custom-file-label">Sélectionner une nouvelle image:</label>
                                         </div>';
                                     }
                                     else{
                                         echo'<div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image" required>
+                                        <input type="file" class="custom-file-input '.$_SESSION['imageInvalid'].'" id="image" name="image"  required>
                                         <label class="custom-file-label" for="image">Choisir un fichier</label>
-                                        <div class="invalid-feedback"> <?php?></div>
-                                        <span class="help-inline"><?php echo $imageError;?></span>
+                                        <div class="invalid-feedback"> 
+                                        <span class="help-inline">'.@$_SESSION['imageError'].'</span>
+                                        </div>
                                         </div>';
+                                        @$_SESSION['imageError'] = "";
                                     }
                                     ?>
                           </div>

@@ -89,8 +89,7 @@ require_once "../../database/db.php";
                                 $pages = ceil($nbville / $parPage);
                                 // Calcul de la première information de la page
                                 $premier = ($currentPage * $parPage) - $parPage;
-                                
-                                $sql = 'SELECT * FROM ville ORDER BY dateAjout DESC LIMIT :premier, :parpage;';
+                                $sql = 'SELECT * FROM ville ORDER BY dateAjout  DESC LIMIT :premier, :parpage;';
                                 // On prépare la requête
                                 $query = $db->prepare($sql);
 

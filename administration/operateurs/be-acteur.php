@@ -244,21 +244,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                     <?php endif ?>
                                 </div>
                                     </div>
-                                    <div class="card-body mt-3 mb-4">
-                                        <div class="row">
-                                            <div class="col-md-4">
-
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>Vous Pouvez :</h6>
-                                                <ul style="list-style-type: none;">
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Ajouter de nouvelles informations</li>
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Modifier une information enrégistrer</li>
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Supprimer une information enrégistrer</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                     
                                 </div>
                             </div>
                         </div>
