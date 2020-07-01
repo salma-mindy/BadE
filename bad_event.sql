@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 27 juin 2020 à 15:54
--- Version du serveur :  10.4.11-MariaDB
--- Version de PHP : 7.4.6
+-- Généré le : mer. 01 juil. 2020 à 04:28
+-- Version du serveur :  10.4.13-MariaDB
+-- Version de PHP : 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `acteurs` (
   `id` int(11) NOT NULL,
   `intitule` varchar(255) NOT NULL,
+  `dateModification` datetime DEFAULT NULL,
+  `dateAjout` datetime DEFAULT NULL,
   `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -37,14 +39,17 @@ CREATE TABLE `acteurs` (
 -- Déchargement des données de la table `acteurs`
 --
 
-INSERT INTO `acteurs` (`id`, `intitule`, `idUtilisateur`) VALUES
-(4, 'enfant', 0),
-(5, 'garçon', 0),
-(6, 'fille', 0),
-(7, 'fillette', 0),
-(8, 'goupe de personne', 0),
-(9, 'femme', 0),
-(10, 'homme', 0);
+INSERT INTO `acteurs` (`id`, `intitule`, `dateModification`, `dateAjout`, `idUtilisateur`) VALUES
+(4, 'enfant', NULL, NULL, 0),
+(5, 'garçon', NULL, NULL, 0),
+(6, 'filles', '2020-07-01 04:07:13', NULL, 39),
+(7, 'fillette', NULL, NULL, 0),
+(8, 'groupe de personnes', '2020-07-01 04:06:57', NULL, 39),
+(9, 'femme', NULL, NULL, 0),
+(10, 'homme', NULL, NULL, 0),
+(11, 'qsdfgg', '2020-07-01 04:07:49', '2020-07-01 02:20:31', 39),
+(12, 'azerty', '2020-07-01 02:45:52', '2020-07-01 02:45:52', 39),
+(20, 'azerty1', '2020-07-01 03:31:16', '2020-07-01 03:31:16', 39);
 
 -- --------------------------------------------------------
 
@@ -66,35 +71,26 @@ CREATE TABLE `activites` (
 
 CREATE TABLE `danger` (
   `id` int(11) NOT NULL,
-  `numeroOrdre` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `date` date NOT NULL,
+  `idDangerType` int(11) NOT NULL,
+  `idPays` int(11) NOT NULL,
   `source` varchar(255) NOT NULL,
-  `idUtilisateur` int(11) NOT NULL,
-  `Lieu` text NOT NULL,
-  `dangerType` text NOT NULL,
-  `descripendroit` text NOT NULL,
-  `pays` text NOT NULL,
-  `ville` text NOT NULL,
-  `longitude` text NOT NULL,
-  `latitude` text NOT NULL,
-  `typeActeur` text NOT NULL,
-  `sexeVictime` text NOT NULL,
-  `sexeResponsable` text NOT NULL,
-  `dateAjout` date NOT NULL DEFAULT current_timestamp(),
-  `autorisationAlieu` int(11) NOT NULL
+  `idVille` int(11) NOT NULL,
+  `sexeVictime` int(11) NOT NULL,
+  `sexeResponsable` int(11) NOT NULL,
+  `dateAjout` datetime NOT NULL,
+  `dateModification` datetime NOT NULL,
+  `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `danger`
 --
 
-INSERT INTO `danger` (`id`, `numeroOrdre`, `description`, `date`, `source`, `idUtilisateur`, `Lieu`, `dangerType`, `descripendroit`, `pays`, `ville`, `longitude`, `latitude`, `typeActeur`, `sexeVictime`, `sexeResponsable`, `dateAjout`, `autorisationAlieu`) VALUES
-(1, '01dxdx', 'longitudelongitudelongitudelongitudelongitudelongitude', '0000-00-00', 'InfoIvoire', 33, 'fcfsfcfscfs', 'Troubles(manifestation)', 'dffffdcfdcfdcd', 'Côte d\'Ivoire', 'Abengourou', '1222', '333', 'Femme', 'Masculin', 'Masculin', '2020-06-20', 0),
-(3, '0001IND-06-21-2021', 'pas de description', '2020-06-20', 'www.abidjan.net', 35, 'Autoroute du Nord vers atékoubé', 'Inondation', 'L\'endroit est un autoroute', 'Côte d\'Ivoire', 'Attecoube', '-4.02357', '5.36507', 'Goupe de personne', 'Masculin', 'pas de responsable', '2020-06-21', 0),
-(4, '0002ACC-06-21-2020', 'rien', '2020-06-12', 'www.abidjant.net', 35, 'Autoroute du Nord', 'Accident', 'Autoroute du nord en quittant adjamè pour yopougon, au niveau l\'entréprise de fabrication de ciment', 'Côte d\'Ivoire', 'Abidjan, autoroute Adjamé - yopougon', '-4.04145', '5.36507', 'Goupe de personne', 'Il y avait des garçons et aussi femmes', 'les responsable ne sont pas des humains,', '2020-05-21', 0),
-(5, '0003V2A-06-21-2020', 'ceci est un test', '2020-06-18', 'linfodrom', 35, 'Adjamé mosqué', 'Vole à l’arraché', 'Adjamé nom loin de la gare Nord', 'Côte d\'Ivoire', 'Adjame', '-4.02357', '5.36507', 'Goupe de personne', 'Feminin', 'Masculin', '2020-06-21', 0),
-(8, '003NO-23', 'ceci est un test', '2020-06-21', 'Abidjan.net', 35, 'Commerce', 'Arnaque', 'le lieu est situé au quartier commerce de la commune du plateau à abidjan', 'Côte d\'Ivoire', 'plateau', '-4.02357', '5.32332', 'Garçon', 'Masculin', 'Masculin', '2020-06-23', 0);
+INSERT INTO `danger` (`id`, `description`, `date`, `idDangerType`, `idPays`, `source`, `idVille`, `sexeVictime`, `sexeResponsable`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
+(1, 'Grand spécialiste du genre, Udemy propose de nombreuses formations sur Python dans son catalogue. Assurées par des professionnels expérimentés, ces cours en vidéo sont accessibles soit à des débutants, soit à des des développeurs initiés, et s’appuient sur de nombreux exercices permettant de mettre immédiatement la théorie en pratique. Comme toujours, des extraits sont disponibles en visionnage gratuit, pour se faire une idée du contenu et du formateur. Offrant un accès illimité en vidéo à la demande (VOD), à la fois sur ordinateur, TV et mobile, toutes ces formations bénéficient en outre d’une garantie « Satisfait ou remboursé » de 30 jours, gage de qualité et de sérieux.', '2020-06-04', 1, 1, 'https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp', 22, 4, 5, '2020-06-30 03:40:10', '2020-06-30 15:51:29', 39),
+(5, 'Totalisant plus de 13 heures de vidéo réparties en 43 articles, ce cours se présente comme une formation complète et progressive à Python. Spécialiste de la programmation, le formateur aborde tous les aspects de ce langage très prisé, des bases essentielles aux concepts les plus évolués, en s’appuyant sur de nombreux quiz et exercices pratiques permettant de vérifier immédiatement les connaissances acquises. Du choix de l’environnement de développement (Sublime Text, Visual Studio Code, PyCharm, Anaconda…) et de la plateforme (Windows, macOS ou Linux) aux opérateurs ternaires, en passant par les packages, les fonctions, les listes ou la gestion d’erreurs avec des exceptions, tous les aspects de la programmation objet en Python sont passés en revue avec force d’exemples et d’explications. Plusieurs projets concrets sont proposés dans cette formation réalisée avec la version 3.7 qui s’adresse aussi bien aux débutants motivés qu’aux développeurs confirmés souhaitant apprendre un nouveau langage.', '2020-06-03', 3, 2, 'https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp', 83, 5, 6, '2020-06-30 04:42:27', '2020-06-30 04:42:27', 39);
 
 -- --------------------------------------------------------
 
@@ -154,6 +150,7 @@ CREATE TABLE `message` (
 CREATE TABLE `pays` (
   `id` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
+  `descriptionEvent` text NOT NULL,
   `lat` double NOT NULL,
   `lng` double NOT NULL,
   `img` text NOT NULL,
@@ -164,9 +161,9 @@ CREATE TABLE `pays` (
 -- Déchargement des données de la table `pays`
 --
 
-INSERT INTO `pays` (`id`, `nom`, `lat`, `lng`, `img`, `idUtilisateurs`) VALUES
-(1, 'Côte d\'Ivoire', 0, 0, '', 0),
-(2, 'Ghana', 0, 0, '', 0);
+INSERT INTO `pays` (`id`, `nom`, `descriptionEvent`, `lat`, `lng`, `img`, `idUtilisateurs`) VALUES
+(1, 'Côte d\'Ivoire', '', 0, 0, '', 0),
+(2, 'Ghana', '', 0, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -362,8 +359,7 @@ ALTER TABLE `activites`
 -- Index pour la table `danger`
 --
 ALTER TABLE `danger`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idUtilisateur` (`idUtilisateur`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `dangertype`
@@ -416,7 +412,7 @@ ALTER TABLE `visiteurs`
 -- AUTO_INCREMENT pour la table `acteurs`
 --
 ALTER TABLE `acteurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `activites`
@@ -428,7 +424,7 @@ ALTER TABLE `activites`
 -- AUTO_INCREMENT pour la table `danger`
 --
 ALTER TABLE `danger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `dangertype`
@@ -469,12 +465,6 @@ ALTER TABLE `ville`
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `danger`
---
-ALTER TABLE `danger`
-  ADD CONSTRAINT `danger_ibfk_1` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`id`);
 
 --
 -- Contraintes pour la table `utilisateurs`
