@@ -311,10 +311,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row form-group d-flex justify-content-end">
                         <section class="">
-                            <button type="reset" class="btn btn-outline-danger"> Annuler</button>
+                            <button type="reset" class="btn btn-danger"> Annuler</button>
                         </section>
                         <section class="ml-3 mr-3">
-                            <button type="submit" class="btn btn-warning"><?php if (isset($_GET['operation'])) {
+                            <button type="submit" class="btn btn-outline-warning"><?php if (isset($_GET['operation'])) {
                                     echo 'Modifier';
                                     
                                 } else {

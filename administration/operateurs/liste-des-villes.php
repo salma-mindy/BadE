@@ -17,13 +17,13 @@ require_once "../../database/db.php";
     <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>pays View - Opérateurs | Liste des informations</title>
+        <title>ville View - Opérateurs | Liste des informations</title>
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="../bootstrap/js/jquery-3.5.1.min.js"></script>
         <script src='../bootstrap/js/bootbox.min.js' type='text/javascript'></script>
-        <script src='../bootstrap/js/delete-jq-pays.js' type='text/javascript'></script>
+        <script src='../bootstrap/js/delete-jq-ville.js' type='text/javascript'></script>
         <link rel="icon" type="image/png" href="../img/logo1.png" />
     </head>
 
@@ -39,22 +39,22 @@ require_once "../../database/db.php";
                 <?php require'include/header.php';?>
                     <!-- / Topbar -->
 
-                    <!-- Contenue de la page -->
+                    <!-- Contenu de la page -->
                     <div class="container-fluid">
-                        <!--     <?php if($errorMsg != ""): ?>
+                        <!--     <?php if(@$errorMsg != ""): ?>
                       <div class="alert alert-success" role="alert">
                           <?php echo $errorMsg; ?>
                       </div>
                       <?php endif ?> -->
-                        <div class="card mb-4">
+                        <div class="card mb-">
                             <div class="h4 card-header font-weight-normal" style="background: #a19e9e !important">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h4 class="mt-2 text-white">Les informations que vous avez ajouter</h4>
                                     </div>
                                     <div class="col-lg-6">
-                                        <a href="ajouter-pays.php">
-                                            <button type="button" class="btn btn-pays m-1 float-right" style="background: #ff1300!important; color:#fff;">
+                                        <a href="ajouter-ville.php">
+                                            <button type="button" class="btn btn-ville m-1 float-right" style="background: #ff1300!important; color:#fff;">
                                                 <i class="fa fa-plus-square fa-lg"></i>
                                                 &nbsp;&nbsp; Ajouter
                                             </button>
@@ -75,22 +75,22 @@ require_once "../../database/db.php";
                                 $idUser = $_SESSION["id"];
 
                                 // On détermine le nombre total d'informations
-                                $sql = "SELECT COUNT(*) AS nb_pays FROM pays";
+                                $sql = "SELECT COUNT(*) AS nb_ville FROM ville ";
                                 // On prépare la requête
                                 $query = $db->prepare($sql);
                                 // On exécute
                                 $query->execute();
                                 // On récupère le nombre d'informations
                                 $result = $query->fetch();
-                                $nbpays = (int) $result['nb_pays'];
+                                $nbville = (int) $result['nb_ville'];
                                 // On détermine le nombre d'informations par page
-                                $parPage = 5;
+                                $parPage = 10;
                                 // On calcule le nombre de pages total
-                                $pages = ceil($nbpays / $parPage);
+                                $pages = ceil($nbville / $parPage);
                                 // Calcul de la première information de la page
                                 $premier = ($currentPage * $parPage) - $parPage;
                                 
-                                $sql = 'SELECT * FROM pays ORDER BY dateAjout DESC LIMIT :premier, :parpage;';
+                                $sql = 'SELECT * FROM ville ORDER BY dateAjout DESC LIMIT :premier, :parpage;';
                                 // On prépare la requête
                                 $query = $db->prepare($sql);
 
@@ -100,8 +100,8 @@ require_once "../../database/db.php";
                                 // On exécute
                                 $query->execute();
                                 // On récupère les valeurs dans un tableau associatif
-                                $pays = $query->fetchAll(PDO::FETCH_ASSOC);
-                                $d_nb = count($pays);
+                                $ville = $query->fetchAll(PDO::FETCH_ASSOC);
+                                $d_nb = count($ville);
                                 //var_dump($d_nb);exit();
                             ?>
                                 <div class="card-body">
@@ -123,61 +123,61 @@ require_once "../../database/db.php";
                                                                 <th>Nom</th>
                                                                 <th>latitude</th>
                                                                 <th>longitude</th>
-                                                                <th>Nombre de ville</th>
+                                                                <th>Pays</th>
                                                                 <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
 
                                                             <tbody class="text-center text-secondary">
-                                                                <?php $i=1;  foreach($pays as $pays) { ?>
+                                                                <?php $i=1;  foreach($ville as $ville) { ?>
                                                                 <tr>
                                                                     <td>
                                                                         <?php echo $i++ ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php
-                                                                            echo $pays['nom'];
+                                                                            echo $ville['ville'];
                                                                         ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php
-                                                                            echo $pays['lat'];
+                                                                            echo $ville['lat'];
                                                                         ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php 
-                                                                            echo $pays['lng'];
+                                                                            echo $ville['lng'];
                                                                          ?>
                                                                     </td>
                                                                     <td>
                                                                     <?php 
-                                                                            $sql = 'SELECT COUNT(*) AS nb_pays FROM ville WHERE pays={echo '.$pays['id'].'}';
+                                                                            $sql = 'SELECT COUNT(*) AS nb_ville FROM ville WHERE ville={echo '.$ville['id'].'}';
                                                                             $query = $db->prepare($sql);
                                                                             // On exécute
                                                                             $query->execute();
                                                                             // On récupère le nombre d'informations
                                                                             $result = $query->fetch();
-                                                                            $nbpays = (int) $result['nb_pays'];
-                                                                            echo  $nbpays;
+                                                                            $nbville = (int) $result['nb_ville'];
+                                                                            echo  $nbville;
                                                                          ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php
-                                                                            if ($idUser == $pays['idUtilisateur']) {
-                                                                               echo '<a href="ajouter-pays.php?id='.$pays['id'].'&operation=modification" type="button" class="text-primary">
+                                                                            if ($idUser == $ville['idUtilisateur']) {
+                                                                               echo '<a href="ajouter-ville.php?id='.$ville['id'].'&operation=modification" type="button" class="text-primary">
                                                                                 <i class="fa fa-edit fa-lg"></i>
                                                                             </a>&nbsp;&nbsp;
-                                                                            <a class="text-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter'.$pays["id"].'"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+                                                                            <a class="text-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter'.$ville["id"].'"><i class="fa fa-trash" aria-hidden="true"></i> </a>
                                                                             ';?>
                                                                             </td>
                                                                             <?php
                                                                             echo '<tr>
-                                                                            <div class="modal fade" id="exampleModalCenter'.$pays["id"].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                            <div class="modal fade" id="exampleModalCenter'.$ville["id"].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                                 <div class="modal-content">
                                                                                 <div class="modal-header">
-                                                                                    <h5 class="modal-title text-dark" id="exampleModalLongTitle'.$pays["id"].'">Suppression pays</h5>
+                                                                                    <h5 class="modal-title text-dark" id="exampleModalLongTitle'.$ville["id"].'">Suppression ville</h5>
                                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                     </button>
@@ -187,7 +187,7 @@ require_once "../../database/db.php";
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
-                                                                                        <a href="traitement/delete-pays.php?id='.$pays["id"].'" class="btn btn-danger">Supprimer</a> 
+                                                                                        <a href="traitement/delete-ville.php?id='.$ville["id"].'" class="btn btn-danger">Supprimer</a> 
                                                                                 </div>
                                                     
                                                                             </div>
@@ -203,7 +203,7 @@ require_once "../../database/db.php";
                                                         
                                                         <ul class="pagination justify-content-center">
 
-                                                            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "text-pays" ?>">
+                                                            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "text-ville" ?>">
                                                                 <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
                                                                 <span aria-hidden="true">&laquo;</span>
                                                                 <span class="sr-only">Previous</span>
@@ -211,14 +211,14 @@ require_once "../../database/db.php";
                                                             </li>
 
                                                             <?php for($page = 1; $page <= $pages; $page++): ?>
-                                                                <li class="page-item <?= ($currentPage == $page) ? "active text-pays" : "" ?>">
+                                                                <li class="page-item <?= ($currentPage == $page) ? "active text-ville" : "" ?>">
                                                                     <a class="page-link" href="?page=<?= $page ?>">
                                                                         <?= $page ?>
                                                                     </a>
                                                                 </li>
                                                             <?php endfor; ?>
 
-                                                            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "text-pays" ?>">
+                                                            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "text-ville" ?>">
                                                                 <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
                                                                 <span aria-hidden="true">&raquo;</span>
                                                                 <span class="sr-only">Next</span>
