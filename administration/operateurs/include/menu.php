@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./ ">
+                    <a class="nav-link" href="./be-tdanger.php ">
                         <i class="fa fa-plus-square" aria-hidden="true"></i>
                         <span>Ajouter un type de danger</span>
                     </a>
@@ -53,7 +53,7 @@
                         <span>Liste des lieux ajouter</span>
                     </a>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">liste des Pays</a>
+                    <a class="dropdown-item" href="liste-des-pays.php">liste des Pays</a>
                     <a class="dropdown-item" href="#">liste des villes</a>
                     </div>
                 </li>

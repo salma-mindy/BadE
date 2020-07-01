@@ -14,7 +14,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
 
     <head>
         <?php require'include/head.php';?>
-        <title>acteurs View - Opérateurs</title>
+        <title>dangertype View - Opérateurs</title>
     </head>
 
     <body id="page-top">
@@ -36,35 +36,36 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card mb-5">
                                     <h6 class="h4 card-header font-weight-normal text-center" style="background: #a19e9e !important">
-                                        <?php
+                                    <?php
                                              if (isset($_GET['operation']) && ($_GET['operation'] == 'modification') ) {
-                                                 echo "Modifier un type d'acteur";
-                                                } else {
-                                                    echo "Ajouter un type d'acteur" ;
+                                                 echo "Modifier un type de danger";
+                                            } else {
+                                                echo "Ajouter un type de danger" ;
+
                                             }
                                         ?>
                                     </h6>
                                     <div class="card-body">
                                         <p class="card-text">
-                                            <!-- <i class="fa fa-times text-acteurs" aria-hidden="true"></i>&nbsp; -->
+                                            <!-- <i class="fa fa-times text-dangertype" aria-hidden="true"></i>&nbsp; -->
                                             <form action="<?php  
                                                     if (isset($_GET['operation']) && ($_GET['operation'] == 'modification') ) {
-                                                        echo 'traitement/update-acteurs.php?id='.$_GET['id'] ;
+                                                        echo 'traitement/update-dangertype.php?id='.$_GET['id'] ;
                                                     } else {
-                                                        echo 'traitement/add-acteurs.php';
+                                                        echo 'traitement/add-dangertype.php';
 
                                                     }
                                                     
                                                 ?>" method="POST" enctype="multipart/form-data" class="container-fluid">
                                             <div class="form-group row mt-2">
-                                                <label for="acteurs" class="col-lg-3 col-md-2 ">Ajout d'acteurs</label>
+                                                <label for="dangertype" class="col-lg-3 col-md-2 ">Type de danger</label>
                                                 <div class="col-lg col-md col-sm">
-                                                    <input type="text" name="acteurs" id="" class="form-control <?php echo $_SESSION['echec']; $_SESSION['echec']="";  ?>" <?php  if (@$_GET['operation'] == 'modification') {
+                                                    <input type="text" name="dangertype" id="" class="form-control <?php echo $_SESSION['echec']; $_SESSION['echec']="";  ?>" <?php  if (@$_GET['operation'] == 'modification') {
                                                         require_once "../../database/db.php";
-                                                        $req = $db->prepare('SELECT * FROM acteurs WHERE id = ?');
-                                                        $acteur = $req->execute([$_GET['id']]);
-                                                        $acteurs = $req->fetchAll(PDO::FETCH_ASSOC);
-                                                        foreach($acteurs as $acteur){ echo 'value="'.$acteur['intitule'].'"';};
+                                                        $req = $db->prepare('SELECT * FROM dangertype WHERE id = ?');
+                                                        $typedanger = $req->execute([$_GET['id']]);
+                                                        $dangertype = $req->fetchAll(PDO::FETCH_ASSOC);
+                                                        foreach($dangertype as $typedanger){ echo 'value="'.$typedanger['intitule'].'"';};
                                                         
                                                     }; ?> required>
                                                     <div class="invalid-feedback"> <?php echo @$_SESSION['infoechec']; ?></div>
@@ -91,9 +92,9 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-lg-12">
-                                <div class="card mb-4 mt-5">
+                                <div class="card mb-4">
                                     <h6 class="h4 card-header font-weight-normal text-center" style="background: #a19e9e !important">
-                                        List type d'acteur
+                                        List type de danger
                                     </h6>
                                     <div id="operat" class="mx-auto text-center align-item-center">
                                     <?php
@@ -109,23 +110,23 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                              
 
                                             // On détermine le nombre total d'informations
-                                            $sql = "SELECT COUNT(*) AS nb_acteurs FROM acteurs";
+                                            $sql = "SELECT COUNT(*) AS nb_dangertype FROM dangertype";
                                             // On prépare la requête
                                             $query = $db->prepare($sql);
                                             // On exécute
                                             $query->execute();
                                             // On récupère le nombre d'informations
                                             $result = $query->fetch();
-                                            $nbacteurs = (int) $result['nb_acteurs'];
+                                            $nbdangertype = (int) $result['nb_dangertype'];
                                              
                                             // On détermine le nombre d'informations par page
                                             $parPage = 5;
                                             // On calcule le nombre de pages total
-                                            $pages = ceil($nbacteurs / $parPage);
+                                            $pages = ceil($nbdangertype / $parPage);
                                             // Calcul de la première information de la page
                                             $premier = ($currentPage * $parPage) - $parPage;
                                             
-                                            $sql = 'SELECT * FROM acteurs  ORDER BY intitule DESC LIMIT :premier, :parpage;';
+                                            $sql = 'SELECT * FROM dangertype  ORDER BY intitule DESC LIMIT :premier, :parpage;';
                                             // On prépare la requête
                                             $query = $db->prepare($sql);
 
@@ -136,9 +137,9 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                             // On exécute
                                             $query->execute();
                                             // On récupère les valeurs dans un tableau associatif
-                                            $acteurs = $query->fetchAll(PDO::FETCH_ASSOC);
+                                            $dangertype = $query->fetchAll(PDO::FETCH_ASSOC);
                                              
-                                            $d_nb = count($acteurs);
+                                            $d_nb = count($dangertype);
                                             //var_dump($d_nb);exit();
                                     ?>
                                     <div class="card-body">
@@ -153,41 +154,41 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                             <div class="col-lg-12">
                                                 <div class="p-1">
                                                     <div class="table-responsive">
-                                                        <table id="user_data" class="table table-striped table-sm table-bordered table-hover" style="color: #fff;">
+                                                        <table id="user_data" class="table table-striped table-bordered table-hover" style="color: #fff;">
                                                             <thead>
                                                                 <tr class="text-center">
                                                                     <th>N</th>
-                                                                    <th>Type de acteurs</th>
+                                                                    <th>Type de danger</th>
                                                                     <th>Actions</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
 
                                                                 <tbody class="text-center text-secondary">
-                                                                    <?php $i=1;  foreach($acteurs as $acteur) { ?>
+                                                                    <?php $i=1;  foreach($dangertype as $typedanger) { ?>
                                                                     <tr>
                                                                         <td>
                                                                             <?php echo $i++ ?>
                                                                         </td>
                                                                          <td>
-                                                                            <?php echo $acteur['intitule']?>
+                                                                            <?php echo $typedanger['intitule']?>
                                                                          </td>
                                                                         <td>
                                                                         <?php
-                                                                            if ($idUser == $acteur['idUtilisateur']) {
-                                                                               echo '<a href="be-acteur.php?id='.$acteur['id'].'&operation=modification" type="button" class="text-primary">
+                                                                            if ($idUser == $typedanger['idUtilisateur']) {
+                                                                               echo '<a href="be-tdanger.php?id='.$typedanger['id'].'&operation=modification" type="button" class="text-primary">
                                                                                 <i class="fa fa-edit fa-lg"></i>
                                                                             </a>&nbsp;&nbsp;
-                                                                            <a class="text-acteurs text-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter'.$acteur["id"].'"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+                                                                            <a class="text-dangertype text-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter'.$typedanger["id"].'"><i class="fa fa-trash" aria-hidden="true"></i> </a>
                                                                             ';?>
                                                                             </td>
                                                                             <?php
                                                                             echo '<tr>
-                                                                            <div class="modal fade" id="exampleModalCenter'.$acteur["id"].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                            <div class="modal fade" id="exampleModalCenter'.$typedanger["id"].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                                 <div class="modal-content">
                                                                                 <div class="modal-header">
-                                                                                    <h5 class="modal-title text-dark" id="exampleModalLongTitle'.$acteur["id"].'">Suppression Acteurs</h5>
+                                                                                    <h5 class="modal-title text-dark" id="exampleModalLongTitle'.$typedanger["id"].'">Suppression dangertype</h5>
                                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                     </button>
@@ -197,7 +198,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
-                                                                                        <a href="traitement/delete-acteurs.php?id='.$acteur["id"].'" class="btn btn-danger">Supprimer</a> 
+                                                                                        <a href="traitement/delete-dangertype.php?id='.$typedanger["id"].'" class="btn btn-danger">Supprimer</a> 
                                                                                 </div>
                                                     
                                                                             </div>
@@ -213,7 +214,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                                         
                                                         <ul class="pagination justify-content-center">
 
-                                                            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "text-acteurs" ?>">
+                                                            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "text-dangertype" ?>">
                                                                 <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
                                                                 <span aria-hidden="true">&laquo;</span>
                                                                 <span class="sr-only">Previous</span>
@@ -221,14 +222,14 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                                             </li>
 
                                                             <?php for($page = 1; $page <= $pages; $page++): ?>
-                                                                <li class="page-item <?= ($currentPage == $page) ? "active text-acteurs" : "" ?>">
+                                                                <li class="page-item <?= ($currentPage == $page) ? "active text-dangertype" : "" ?>">
                                                                     <a class="page-link" href="?page=<?= $page ?>">
                                                                         <?= $page ?>
                                                                     </a>
                                                                 </li>
                                                             <?php endfor; ?>
 
-                                                            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "text-acteurs" ?>">
+                                                            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "text-dangertype" ?>">
                                                                 <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
                                                                 <span aria-hidden="true">&raquo;</span>
                                                                 <span class="sr-only">Next</span>
@@ -244,21 +245,7 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
                                     <?php endif ?>
                                 </div>
                                     </div>
-                                    <div class="card-body mt-3 mb-4">
-                                        <div class="row">
-                                            <div class="col-md-4">
-
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>Vous Pouvez :</h6>
-                                                <ul style="list-style-type: none;">
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Ajouter de nouvelles informations</li>
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Modifier une information enrégistrer</li>
-                                                    <li><i class="fa fa-hand-o-right" style="color: #ffc500 !important;"></i>&nbsp; Supprimer une information enrégistrer</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                     
                                 </div>
                             </div>
                         </div>

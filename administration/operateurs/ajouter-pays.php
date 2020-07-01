@@ -235,15 +235,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <center><?php  
                                 if (isset($_GET['operation']) && ($_GET['operation'] == 'modification') ) {
                                     echo 'Modification pays';
-                                    /*if(!empty($_GET['id'])) 
+                                    if(!empty($_GET['id'])) 
                                     {
                                         $id = strip_tags($_GET['id']);
                                          
                                     }    
-                                    $db= Database::connect();
-                                    $recupUnique = $db->query("SELECT * FROM pays WHERE idPays= $id");
+                                    $recupUnique = $db->query("SELECT * FROM pays WHERE id= $id");
                                     $pays = $recupUnique->fetch();
-                                    Database::deconnect();*/
                                 } else {
                                     echo 'Enregistrement pays';
                                 }
@@ -265,7 +263,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <section class="row">
                         <div class="form-group col-md">
                             <input type="text" name="nomlieu" id="" class="form-control" placeholder="Nom du pays" <?php  if (@$_GET['operation'] == 'modification') {
-                                    echo 'value="' .$pays['nomPays'].'"';
+                                    echo 'value="' .$pays['nom'].'"';
                                 } ?> required>
                         </div>
                     </section>
@@ -283,8 +281,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row">
                         <div class="form-group col-md">
-                        <textarea class="form-control " rows="5" id="descriptionlieu" name="descriptionlieu" placeholder="Description..." style="resize:none">  <?php  if (@$_GET['operation'] == 'modification') {
-                                    echo  $pays['descriptionPays'];
+                        <textarea class="form-control form-control-user " rows="5" id="descriptionlieu" name="descriptionlieu" placeholder="Description..." style="resize:none"><?php  if (@$_GET['operation'] == 'modification') {
+                                    echo  $pays['description'];
                                 } ?></textarea>
                         </div>
                     </section>
@@ -294,10 +292,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     if (@$_GET['operation'] == 'modification') 
                                     {
                                         echo'<label for="image">Nom Image:</label>
-                                        <p>'.$pays['imagePays'].'</p>
-                                        <div classe="form-group ">
-                                        <label for="image">Sélectionner une nouvelle image:</label>
-                                        <input type="file" id="image" name="image" class="form-control"> </div>';
+                                        <p>'.$pays['img'].'</p>
+                                        <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image" name="image" required>
+                                        <label for="image" class="custom-file-label">Sélectionner une nouvelle image:</label>
+                                        </div>';
                                     }
                                     else{
                                         echo'<div class="custom-file">
@@ -312,10 +311,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row form-group d-flex justify-content-end">
                         <section class="">
-                            <button type="reset" class="btn btn-danger"> Annuler</button>
+                            <button type="reset" class="btn btn-outline-danger"> Annuler</button>
                         </section>
                         <section class="ml-3 mr-3">
-                            <button type="submit" class="btn btn-outline-secondary"><?php if (isset($_GET['operation'])) {
+                            <button type="submit" class="btn btn-warning"><?php if (isset($_GET['operation'])) {
                                     echo 'Modifier';
                                     
                                 } else {
