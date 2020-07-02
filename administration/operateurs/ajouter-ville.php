@@ -14,7 +14,8 @@ $description = $date = $source = $dangerType = $pays = "";
 $ville = $sexeVictime = $sexeResponsable = "";
 $ville_err = $sexeVictime_err = $sexeResponsable_err = "";
 $description_err = $date_err = $source_err_err = $dangerType_err = $pays_err = "";
-$errorMsg = "";
+ 
+ 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
@@ -107,9 +108,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($stmt = $db->prepare($sql)){
              
             if($stmt->execute($newdanger)){
-               $errorMsg = "success";
+               $_SESSION['alerte'] = "success";
             } else{
-                $errorMsg = "error";
+                $_SESSION['alerte'] = "error";
             }
         }
     }
@@ -166,7 +167,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
     <?php 
-        if($errorMsg === "success"){
+        if($_SESSION['alerte'] === "success"){
             echo '<script type="text/javascript">
                     $(document).ready(function(){
                         const Toast = Swal.mixin({
@@ -187,7 +188,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           })
                     });
                 </script>';
-        }elseif($errorMsg === "error"){
+        }elseif($_SESSION['alerte'] === "error"){
             echo '<script type="text/javascript">
                     $(document).ready(function(){
                         const Toast = Swal.mixin({
@@ -300,12 +301,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row">
                         <div class="form-group col-md">
-                            <input type="text" name="longlieu" id="" class="form-control" placeholder="Longitude" <?php  if (@$_GET['operation'] == 'modification') {
+                            <input type="number" step="0.000001" name="longlieu" id="" class="form-control" placeholder="Longitude" <?php  if (@$_GET['operation'] == 'modification') {
                                     echo 'value="' .$ville['lng'].'"';
                                 } ?>>
                         </div>
                         <div class="form-group col-md">
-                            <input type="text" name="latlieu" id="" class="form-control" placeholder="Latitude" <?php  if (@$_GET['operation'] == 'modification') {
+                            <input type="number" step="0.000001" name="latlieu" id="" class="form-control" placeholder="Latitude" <?php  if (@$_GET['operation'] == 'modification') {
                                     echo 'value="' .$ville['lat'].'"';
                                 } ?>>
                         </div>
@@ -313,7 +314,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <section class="row">
                         <div class="form-group col-md">
                             <textarea class="form-control form-control-user " rows="5" id="descriptionlieu" name="descriptionlieu" placeholder="Description..." style="resize:none"><?php  if (@$_GET['operation'] == 'modification') {
-                                    echo  $ville['description'];
+                                    echo  $ville['descriptionVille'];
                                 } ?></textarea>
                         </div>
                     </section>
@@ -323,7 +324,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     if (@$_GET['operation'] == 'modification') 
                                     {
                                         echo'<label for="image">Nom Image:</label>
-                                        <p>'.$ville['imageVille'].'</p>
+                                        <p>'.$ville['img'].'</p>
                                         <div classe="form-group">
                                         <label for="image">Sélectionner une nouvelle image:</label>
                                         <input type="file" id="image" name="image"> </div>';
@@ -341,7 +342,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </section>
                     <section class="row form-group d-flex justify-content-end">
                         <section class="">
-                            <button type="reset" class="btn btn-danger"> Annuler</button>
+                            <button onclick="goBack()" type="reset" role="reset" class="btn btn-danger"> Annuler</button>
                         </section>
                         <section class="ml-3 mr-3">
                             <button type="submit" class="btn btn-outline-warning"><?php if (isset($_GET['operation'])) {
@@ -409,6 +410,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         o.preventDefault()
                 })
         }(jQuery);
+        
+        function goBack() {
+        window.history.back();
+        }
+ 
     </script>
 </body>
 

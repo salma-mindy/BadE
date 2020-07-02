@@ -1,27 +1,34 @@
 <?php
-       session_start();
-       require_once "../../../database/db.php";
-       var_dump($_POST);
-       if (!empty($_POST)) {
+   session_start();
+   require_once "../../../database/db.php"; 
+   var_dump($_POST);
+   var_dump($_FILES["image"]["name"]);
+   if (!empty($_POST)) {
         $nomlieu          =strip_tags($_POST['nomlieu']);
         $descriptionlieu  =strip_tags($_POST['descriptionlieu']);
         $image            =strip_tags($_FILES["image"]["name"]);
-        $imagePath        = '../image/lieu/pays/'. basename($image);
+        $imagePath        = '../image/ville/'. basename($image);
         $imageExtension   = pathinfo($imagePath,PATHINFO_EXTENSION);
         $isSuccess        = true;
         $isUploadSuccess  = false;
+
+        if (empty($_POST['pays'])) {
+            $_SESSION['errorpays'] ='is-invalid';
+            $isSuccess = false;
+            $_SESSION['paysInvalid']="";
+        }
   
         if (empty($nomlieu)) {
                 $_SESSION['errorlieu'] ='is-invalid';
                 $isSuccess = false;
                 $_SESSION['lieuInvalid']="";
-            }   
+        }   
         if (empty($descriptionlieu)) {
                 $_SESSION['errordesclieu'] ='is-invalid';
                 $isSuccess = false;
                 $_SESSION['desclieuInvalid']="";
-            }
-    if(empty($image)) // le input file est vide, ce qui signifie que l'image n'a pas ete update
+        }
+        if(empty($image)) // le input file est vide, ce qui signifie que l'image n'a pas ete update
         {
             $isImageUpdated = false;
             echo'<hr>';
@@ -56,43 +63,40 @@
             } 
         }
 
-        var_dump($isSuccess);
-        var_dump($isUploadSuccess);
-        var_dump($isSuccess && $isImageUpdated && $isUploadSuccess);
-        var_dump($isSuccess && !$isImageUpdated);
-        if (($isSuccess && $isImageUpdated && $isUploadSuccess) || ($isSuccess && !$isImageUpdated))
-            {
-                 
-            if($isImageUpdated)
-            {
+        if (($isSuccess && $isImageUpdated && $isUploadSuccess) || ($isSuccess && !$isImageUpdated)) {
+            if ($isImageUpdated) {
                 $newlieu = [
                     'id'                   => $_GET['id'],
-                    'nomLieu'              => $nomlieu,
-                    'descriptionlieu'      => $descriptionlieu,
-                    'lat'                  => $_POST['lat'],
-                    'lng'                  => $_POST['lng'],
-                    'imagelieu'            => $image,
-                    'dernieremodif'        => date("Y-m-d H:i:s")
+                    'nomLieu'              =>$nomlieu,
+                    'descriptionlieu'      =>$descriptionlieu,
+                    'imagelieu'            =>$image,
+                    'lat'                  =>$_POST['latlieu'],
+                    'lng'                  =>$_POST['longlieu'],
+                    'pays'                 =>$_POST['pays'],
+                    'dernieremodif'        => date("Y-m-d H:i:s"),
+                    'idUtilisateur'        => $_SESSION['id']
                 ];
-                $updatelieu = "UPDATE  pays  SET    nom=:nomLieu, lng=:lng, lat=:lat, descriptionPays=:descriptionlieu, img=:imagelieu , dateModification=:dernieremodif WHERE id=:id";
-               $resultat = $db->prepare($updatelieu)->execute($newlieu);      
-            }
-            else
-            {
+                $insertlieu = "UPDATE  ville  SET ville=:nomLieu, descriptionVille=:descriptionlieu, lat=:lat, lng=:lng, img=:imagelieu, pays=:pays, dateModification=:dernieremodif, idUtilisateur=:idUtilisateur WHERE id=:id";
+                $resultat = $db->prepare($insertlieu)->execute($newlieu);
+            } else {
                 $newlieu = [
                     'id'                   => $_GET['id'],
-                    'nomLieu'              => $nomlieu,
-                    'descriptionlieu'      => $descriptionlieu,
-                    'lat'                  => $_POST['lat'],
-                    'lng'                  => $_POST['lng'],
-                    'dernieremodif'        => date("Y-m-d H:i:s")
+                    'nomLieu'              =>$nomlieu,
+                    'descriptionlieu'      =>$descriptionlieu,
+                    'lat'                  =>$_POST['latlieu'],
+                    'lng'                  =>$_POST['longlieu'],
+                    'pays'                 =>$_POST['pays'],
+                    'dernieremodif'        => date("Y-m-d H:i:s"),
+                    'idUtilisateur'        => $_SESSION['id']
                 ];
-                $updatelieu = "UPDATE  pays  SET    nom=:nomLieu, lng=:lng, lat=:lat, descriptionPays=:descriptionlieu, dateModification=:dernieremodif WHERE id=:id";
-               $resultat = $db->prepare($updatelieu)->execute($newlieu);
+                $insertlieu = "UPDATE  ville  SET ville=:nomLieu, descriptionVille=:descriptionlieu, lat=:lat, lng=:lng, pays=:pays, dateModification=:dernieremodif, idUtilisateur=:idUtilisateur WHERE id=:id";
+                $resultat = $db->prepare($insertlieu)->execute($newlieu);
             }
+            
+            //Enregistrement activité si mise à jour réussi.
             if ($resultat) {
             $newActivite = [
-                ':activite'     => 'Mise à jour de Pays',
+                ':activite'     => 'Mise à jour de Ville',
                 ':dateactivite' => date("Y-m-d H:i:s"),
                 ':iduser'       => $_SESSION['id']
             ];
@@ -104,23 +108,18 @@
             var_dump($rActivite);
              if ($rActivite) {
                 $_SESSION['alerte']= "success";
-                header("location:../liste-pays.php");
+                header("location:../ajouter-ville.php");
              } else {
                 $_SESSION['alerte']= "error";
-                header("location:../liste-pays.php");
+                header("location:../ajouter-ville.php");
              }
              
             }
             $_SESSION['alerte']= "error";
-            header ("location:../liste-pays.php");
+        header ("location:../ajouter-ville.php");
         }
-            }
-            
-               
-            header ("location:../ajouter-pays.php");           
-            
-
-        } else {
-            header ("location:../ajouter-pays.php");           
-        }
+        $_SESSION['alerte']= "error";
+        header ("location:../ajouter-ville.php");
+    }
+    }   
 ?>

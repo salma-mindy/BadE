@@ -1,15 +1,15 @@
 <?php
   session_start();
-  require_once "../../../database/db.php";
+  require_once "../../../database/db.php"; 
      if(!empty($_GET['id'])) 
      {
-         $id = strip_tags($_GET['id']);
-         $statement = $db->prepare("DELETE FROM dangertype WHERE id = ?");
+         $id = strip_tags($_GET['id']);  
+         $statement = $db->prepare("DELETE FROM ville WHERE id = ?");
          $resultat = $statement->execute(array($id));
          //Enregistrement activité si mise à jour réussi.
          if ($resultat) {
             $newActivite = [
-                ':activite'     => 'Suppression de type de danger',
+                ':activite'     => 'Suppression de ville',
                 ':dateactivite' => date("Y-m-d H:i:s"),
                 ':iduser'       => $_SESSION['id']
             ];
@@ -21,16 +21,17 @@
             var_dump($rActivite);
             if ($rActivite) {
                 $_SESSION['alerte']= "success";
-                header("location:../be-tdanger.php");
+                header("location:../liste-des-villes.php");
             } else {
                 $_SESSION['alerte']= "error";
-                header("location:../be-tdanger.php");
+                header("location:../liste-des-villes.php");
             }
             
             }
             $_SESSION['alerte']= "error";
-        header ("location:../be-tdanger.php");
+        header ("location:../liste-des-villes.php");
         }
- 
-     }   
+             header ("location:../liste-des-villes.php");
+     }
+     header ("location:../liste-des-villes.php");
  ?>

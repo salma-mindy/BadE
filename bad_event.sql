@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 01 juil. 2020 à 04:28
--- Version du serveur :  10.4.13-MariaDB
--- Version de PHP : 7.4.7
+-- Généré le : jeu. 02 juil. 2020 à 05:10
+-- Version du serveur :  10.4.11-MariaDB
+-- Version de PHP : 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,7 +47,6 @@ INSERT INTO `acteurs` (`id`, `intitule`, `dateModification`, `dateAjout`, `idUti
 (8, 'groupe de personnes', '2020-07-01 04:06:57', NULL, 39),
 (9, 'femme', NULL, NULL, 0),
 (10, 'homme', NULL, NULL, 0),
-(11, 'qsdfgg', '2020-07-01 04:07:49', '2020-07-01 02:20:31', 39),
 (12, 'azerty', '2020-07-01 02:45:52', '2020-07-01 02:45:52', 39),
 (20, 'azerty1', '2020-07-01 03:31:16', '2020-07-01 03:31:16', 39);
 
@@ -60,8 +59,18 @@ INSERT INTO `acteurs` (`id`, `intitule`, `dateModification`, `dateAjout`, `idUti
 CREATE TABLE `activites` (
   `id` int(11) NOT NULL,
   `intituleActivite` varchar(255) NOT NULL,
-  `periode` date NOT NULL DEFAULT current_timestamp()
+  `periode` datetime NOT NULL DEFAULT current_timestamp(),
+  `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `activites`
+--
+
+INSERT INTO `activites` (`id`, `intituleActivite`, `periode`, `idUtilisateur`) VALUES
+(1, 'Mise à jour de Ville', '2020-07-02 04:26:49', 39),
+(2, 'Mise à jour de Ville', '2020-07-02 04:27:24', 39),
+(3, 'Suppression de type de danger', '2020-07-02 05:08:31', 39);
 
 -- --------------------------------------------------------
 
@@ -101,6 +110,8 @@ INSERT INTO `danger` (`id`, `description`, `date`, `idDangerType`, `idPays`, `so
 CREATE TABLE `dangertype` (
   `id` int(11) NOT NULL,
   `intitule` varchar(255) NOT NULL,
+  `dateAjout` datetime NOT NULL,
+  `dateModification` datetime NOT NULL,
   `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -108,24 +119,25 @@ CREATE TABLE `dangertype` (
 -- Déchargement des données de la table `dangertype`
 --
 
-INSERT INTO `dangertype` (`id`, `intitule`, `idUtilisateur`) VALUES
-(1, 'accident', 0),
-(2, 'vole à l’arraché', 0),
-(3, 'viol', 0),
-(4, 'inondation', 0),
-(5, 'vole à main armée(braquage,\r\nCoupeur de route)', 0),
-(6, 'troubles(manifestation)', 0),
-(7, 'suicide', 0),
-(8, 'Arnaque', 0),
-(9, 'violence conjugale', 0),
-(10, 'crime passionnel', 0),
-(11, 'enlèvement', 0),
-(12, 'découverte de corps sans vie', 0),
-(13, 'crime rituel', 0),
-(14, 'Empoisonnement et intoxication', 0),
-(15, 'incendie', 0),
-(16, 'électrocution', 0),
-(17, 'bavure policière', 0);
+INSERT INTO `dangertype` (`id`, `intitule`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
+(1, 'accident', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 39),
+(2, 'vole à l’arraché', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(3, 'viol', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(4, 'inondation', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(6, 'troubles(manifestation)', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(7, 'suicide', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(8, 'Arnaque', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(9, 'violence conjugale', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(10, 'crime passionnel', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(11, 'enlèvement', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(12, 'découverte de corps sans vie', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(13, 'crime rituel', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(14, 'Empoisonnement et intoxication', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(15, 'incendie', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(16, 'électrocution', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(17, 'bavure policière', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(18, 'Vol à main armée ( braquage, Coupeur de route)', '2020-07-01 13:47:05', '2020-07-01 13:47:05', 39),
+(22, 'Vol à main armée ( braquage, Coupeur de route)', '2020-07-01 14:19:46', '2020-07-01 14:19:46', 39);
 
 -- --------------------------------------------------------
 
@@ -150,20 +162,22 @@ CREATE TABLE `message` (
 CREATE TABLE `pays` (
   `id` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
-  `descriptionEvent` text NOT NULL,
+  `descriptionPays` text NOT NULL,
   `lat` double NOT NULL,
   `lng` double NOT NULL,
   `img` text NOT NULL,
-  `idUtilisateurs` int(11) NOT NULL
+  `dateAjout` datetime NOT NULL,
+  `dateModification` datetime NOT NULL,
+  `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `pays`
 --
 
-INSERT INTO `pays` (`id`, `nom`, `descriptionEvent`, `lat`, `lng`, `img`, `idUtilisateurs`) VALUES
-(1, 'Côte d\'Ivoire', '', 0, 0, '', 0),
-(2, 'Ghana', '', 0, 0, '', 0);
+INSERT INTO `pays` (`id`, `nom`, `descriptionPays`, `lat`, `lng`, `img`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
+(1, 'Côte d\'Ivoire', '', 0, 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(2, 'Ghana', '', 0, 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -236,10 +250,13 @@ INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `genre`, `contact`, `adresse`
 CREATE TABLE `ville` (
   `id` int(11) NOT NULL,
   `ville` varchar(50) COLLATE utf8_estonian_ci NOT NULL,
+  `descriptionVille` text COLLATE utf8_estonian_ci NOT NULL,
   `lat` double NOT NULL,
   `lng` double NOT NULL,
   `img` text COLLATE utf8_estonian_ci NOT NULL,
   `pays` int(11) NOT NULL,
+  `dateAjout` date NOT NULL,
+  `dateModification` date NOT NULL,
   `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
 
@@ -247,77 +264,77 @@ CREATE TABLE `ville` (
 -- Déchargement des données de la table `ville`
 --
 
-INSERT INTO `ville` (`id`, `ville`, `lat`, `lng`, `img`, `pays`, `idUtilisateur`) VALUES
-(10, 'adjame', 5.36507, -4.02357, '', 1, 0),
-(11, 'attecoube', 5.33625, -4.04145, '', 1, 0),
-(12, 'cocody', 5.36022, -3.96744, '', 1, 0),
-(13, 'koumassi', 5.30298, -3.94194, '', 1, 0),
-(14, 'marcory', 5.30271, -3.98274, '', 1, 0),
-(15, 'plateau', 5.32332, -4.02357, '', 1, 0),
-(16, 'portbouet', 5.27725, -3.8859, '', 1, 0),
-(17, 'treichville', 5.29209, -4.01336, '', 1, 0),
-(18, 'yopougon', 5.31767, -4.08999, '', 1, 0),
-(19, 'abengourou', 6.7157, -3.48013, '', 1, 0),
-(20, 'aboisso', 5.47451, -3.20308, '', 1, 0),
-(21, 'adzope', 6.10715, -3.85535, '', 1, 0),
-(22, 'agboville', 5.9355, -4.22308, '', 1, 0),
-(23, 'agnibilekrou', 7.13028, -3.20308, '', 1, 0),
-(24, 'anyama', 5.48771, -4.05166, '', 1, 0),
-(26, 'beoumi', 7.67309, -5.57223, '', 1, 0),
-(27, 'bingerville', 5.35036, -3.87571, '', 1, 0),
-(28, 'bocanda', 7.06591, -4.49543, '', 1, 0),
-(29, 'bondoukou', 8.04788, -2.80786, '', 1, 0),
-(30, 'bongouanou', 6.6487, -4.20515, '', 1, 0),
-(31, 'bonoua', 5.27118, -3.59393, '', 1, 0),
-(33, 'boundiali', 9.51836, -6.48232, '', 1, 0),
-(34, 'dabou', 5.32621, -4.36679, '', 1, 0),
-(35, 'daloa', 6.88833, -6.43969, '', 1, 0),
-(36, 'bouaflé', 6.98274, -5.74051, '', 1, 0),
-(37, 'danané', 7.2676, -8.14478, '', 1, 0),
-(38, 'daoukro', 7.0654, -3.95724, '', 1, 0),
-(39, 'dimbokro', 6.65747, -4.71223, '', 1, 0),
-(40, 'divo', 5.84154, -5.36255, '', 1, 0),
-(41, 'douekoue', 6.74738, -7.36246, '', 1, 0),
-(42, 'ferkessedougou', 9.5842, -5.19536, '', 1, 0),
-(43, 'gagnoa', 6.15144, -5.95154, '', 1, 0),
-(44, 'gohitafla', 7.48828, -5.88024, '', 1, 0),
-(45, 'grandlahou', 5.13652, -5.02605, '', 1, 0),
-(46, 'grandbassam', 5.22594, -3.75367, '', 1, 0),
-(47, 'Grand-Bereby', 4.65137, -6.92205, '', 1, 0),
-(48, 'guiglo', 6.54906, -7.49765, '', 1, 0),
-(49, 'issia', 6.48761, -6.58368, '', 1, 0),
-(50, 'jacqueville', 5.20598, -4.42335, '', 1, 0),
-(52, 'katiola', 8.14023, -5.09631, '', 1, 0),
-(53, 'korhogo', 9.46693, -5.61426, '', 1, 0),
-(55, 'mbahiakro', 7.4548, -4.3411, '', 1, 0),
-(58, 'mankono', 8.05991, -6.18983, '', 1, 0),
-(59, 'odienne', 9.51888, -7.55722, '', 1, 0),
-(60, 'oumé', 6.37413, -5.40966, '', 1, 0),
-(61, 'sassandra', 4.95128, -6.09175, '', 1, 0),
-(62, 'seguela', 7.96018, -6.6745, '', 1, 0),
-(63, 'sinfra', 6.62334, -5.91456, '', 1, 0),
-(64, 'soubré', 5.78662, -6.58902, '', 1, 0),
-(65, 'tengrela', 10.482, -6.41306, '', 1, 0),
-(66, 'tiassale', 5.90426, -4.82614, '', 1, 0),
-(67, 'Toulepleu', 6.57956, -8.4102, '', 1, 0),
-(68, 'toumodi', 6.55603, -5.01565, '', 1, 0),
-(69, 'vavoua', 7.37506, -6.47699, '', 1, 0),
-(70, 'yamoussoukro', 6.82762, -5.28934, '', 1, 0),
-(71, 'zuenoula', 7.42404, -6.05204, '', 1, 0),
-(72, 'Bouna', 9.27166, -2.99256, '', 1, 0),
-(73, 'lakota', 5.85947, -5.67735, '', 1, 0),
-(74, 'kani', 8.47784, -6.60504, '', 1, 0),
-(75, 'man', 7.40643, -7.55722, '', 1, 0),
-(76, 'dabakala', 8.36626, -4.43364, '', 1, 0),
-(77, 'kong', 9.15102, -4.61018, '', 1, 0),
-(78, 'Touba', 8.28417, -7.68194, '', 1, 0),
-(79, 'bouake', 7.69047, -5.03905, '', 1, 0),
-(80, 'Accra', 5.5600141, -0.2057437, '', 2, 0),
-(81, 'Kumasi', 6.698081, -1.6230404, '', 2, 0),
-(82, 'Tamale', 9.4051992, -0.8423986, '', 2, 0),
-(83, 'Sekondi-Takoradi', 4.927456, -1.7490216, '', 2, 0),
-(84, 'Ashaiman', 5.694385, -0.029529, '', 2, 0),
-(85, 'Sunyani', 7.3384389, -2.3309226, '', 2, 0);
+INSERT INTO `ville` (`id`, `ville`, `descriptionVille`, `lat`, `lng`, `img`, `pays`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
+(10, 'adjame', '', 5.36507, -4.02357, '', 1, '0000-00-00', '0000-00-00', 39),
+(11, 'attecoube', '', 5.33625, -4.04145, '', 1, '0000-00-00', '0000-00-00', 39),
+(12, 'cocody', '', 5.36022, -3.96744, '', 1, '0000-00-00', '0000-00-00', 39),
+(13, 'koumassi', '', 5.30298, -3.94194, '', 1, '0000-00-00', '0000-00-00', 0),
+(14, 'marcory', '', 5.30271, -3.98274, '', 1, '0000-00-00', '0000-00-00', 0),
+(15, 'plateau', '', 5.32332, -4.02357, '', 1, '0000-00-00', '0000-00-00', 0),
+(16, 'portbouet', '', 5.27725, -3.8859, '', 1, '0000-00-00', '0000-00-00', 0),
+(17, 'treichville', '', 5.29209, -4.01336, '', 1, '0000-00-00', '0000-00-00', 0),
+(18, 'yopougon', '', 5.31767, -4.08999, '', 1, '0000-00-00', '0000-00-00', 0),
+(19, 'abengourou', '', 6.7157, -3.48013, '', 1, '0000-00-00', '0000-00-00', 0),
+(20, 'aboisso', '', 5.47451, -3.20308, '', 1, '0000-00-00', '0000-00-00', 0),
+(21, 'adzope', '', 6.10715, -3.85535, '', 1, '0000-00-00', '0000-00-00', 0),
+(22, 'agboville', '', 5.9355, -4.22308, '', 1, '0000-00-00', '0000-00-00', 0),
+(23, 'agnibilekrou', '', 7.13028, -3.20308, '', 1, '0000-00-00', '0000-00-00', 0),
+(24, 'anyama', '', 5.48771, -4.05166, '', 1, '0000-00-00', '0000-00-00', 0),
+(26, 'beoumi', '', 7.67309, -5.57223, '', 1, '0000-00-00', '0000-00-00', 0),
+(27, 'bingerville', '', 5.35036, -3.87571, '', 1, '0000-00-00', '0000-00-00', 0),
+(28, 'bocanda', '', 7.06591, -4.49543, '', 1, '0000-00-00', '0000-00-00', 0),
+(29, 'bondoukou', '', 8.04788, -2.80786, '', 1, '0000-00-00', '0000-00-00', 0),
+(30, 'bongouanou', '', 6.6487, -4.20515, '', 1, '0000-00-00', '0000-00-00', 0),
+(31, 'bonoua', '', 5.27118, -3.59393, '', 1, '0000-00-00', '0000-00-00', 0),
+(33, 'boundiali', '', 9.51836, -6.48232, '', 1, '0000-00-00', '0000-00-00', 0),
+(34, 'dabou', '', 5.32621, -4.36679, '', 1, '0000-00-00', '0000-00-00', 0),
+(35, 'daloa', '', 6.88833, -6.43969, '', 1, '0000-00-00', '0000-00-00', 0),
+(36, 'bouaflé', '', 6.98274, -5.74051, '', 1, '0000-00-00', '0000-00-00', 0),
+(37, 'danané', '', 7.2676, -8.14478, '', 1, '0000-00-00', '0000-00-00', 0),
+(38, 'daoukro', '', 7.0654, -3.95724, '', 1, '0000-00-00', '0000-00-00', 0),
+(39, 'dimbokro', '', 6.65747, -4.71223, '', 1, '0000-00-00', '0000-00-00', 0),
+(40, 'divo', '', 5.84154, -5.36255, '', 1, '0000-00-00', '0000-00-00', 0),
+(41, 'douekoue', '', 6.74738, -7.36246, '', 1, '0000-00-00', '0000-00-00', 0),
+(42, 'ferkessedougou', '', 9.5842, -5.19536, '', 1, '0000-00-00', '0000-00-00', 0),
+(43, 'gagnoa', '', 6.15144, -5.95154, '', 1, '0000-00-00', '0000-00-00', 0),
+(44, 'gohitafla', '', 7.48828, -5.88024, '', 1, '0000-00-00', '0000-00-00', 0),
+(45, 'grandlahou', '', 5.13652, -5.02605, '', 1, '0000-00-00', '0000-00-00', 0),
+(46, 'grandbassam', '', 5.22594, -3.75367, '', 1, '0000-00-00', '0000-00-00', 0),
+(47, 'Grand-Bereby', '', 4.65137, -6.92205, '', 1, '0000-00-00', '0000-00-00', 0),
+(48, 'guiglo', '', 6.54906, -7.49765, '', 1, '0000-00-00', '0000-00-00', 0),
+(49, 'issia', '', 6.48761, -6.58368, '', 1, '0000-00-00', '0000-00-00', 0),
+(50, 'jacqueville', '', 5.20598, -4.42335, '', 1, '0000-00-00', '0000-00-00', 0),
+(52, 'katiola', '', 8.14023, -5.09631, '', 1, '0000-00-00', '0000-00-00', 0),
+(53, 'korhogo', '', 9.46693, -5.61426, '', 1, '0000-00-00', '0000-00-00', 0),
+(55, 'mbahiakro', '', 7.4548, -4.3411, '', 1, '0000-00-00', '0000-00-00', 0),
+(58, 'mankono', '', 8.05991, -6.18983, '', 1, '0000-00-00', '0000-00-00', 0),
+(59, 'odienne', '', 9.51888, -7.55722, '', 1, '0000-00-00', '0000-00-00', 0),
+(60, 'oumé', '', 6.37413, -5.40966, '', 1, '0000-00-00', '0000-00-00', 0),
+(61, 'sassandra', '', 4.95128, -6.09175, '', 1, '0000-00-00', '0000-00-00', 0),
+(62, 'seguela', '', 7.96018, -6.6745, '', 1, '0000-00-00', '0000-00-00', 0),
+(63, 'sinfra', '', 6.62334, -5.91456, '', 1, '0000-00-00', '0000-00-00', 0),
+(64, 'soubré', '', 5.78662, -6.58902, '', 1, '0000-00-00', '0000-00-00', 0),
+(65, 'tengrela', '', 10.482, -6.41306, '', 1, '0000-00-00', '0000-00-00', 0),
+(66, 'tiassale', '', 5.90426, -4.82614, '', 1, '0000-00-00', '0000-00-00', 0),
+(67, 'Toulepleu', '', 6.57956, -8.4102, '', 1, '0000-00-00', '0000-00-00', 0),
+(68, 'toumodi', '', 6.55603, -5.01565, '', 1, '0000-00-00', '0000-00-00', 0),
+(69, 'vavoua', '', 7.37506, -6.47699, '', 1, '0000-00-00', '0000-00-00', 0),
+(70, 'yamoussoukro', '', 6.82762, -5.28934, '', 1, '0000-00-00', '0000-00-00', 0),
+(71, 'zuenoula', '', 7.42404, -6.05204, '', 1, '0000-00-00', '0000-00-00', 0),
+(72, 'Bouna', '', 9.27166, -2.99256, '', 1, '0000-00-00', '0000-00-00', 0),
+(73, 'lakota', '', 5.85947, -5.67735, '', 1, '0000-00-00', '0000-00-00', 0),
+(74, 'kani', '', 8.47784, -6.60504, '', 1, '0000-00-00', '0000-00-00', 0),
+(75, 'man', '', 7.40643, -7.55722, '', 1, '0000-00-00', '0000-00-00', 0),
+(76, 'dabakala', '', 8.36626, -4.43364, '', 1, '0000-00-00', '0000-00-00', 0),
+(77, 'kong', '', 9.15102, -4.61018, '', 1, '0000-00-00', '0000-00-00', 0),
+(78, 'Touba', '', 8.28417, -7.68194, '', 1, '0000-00-00', '0000-00-00', 0),
+(79, 'bouake', '', 7.69047, -5.03905, '', 1, '0000-00-00', '0000-00-00', 0),
+(80, 'Accra', '', 5.5600141, -0.2057437, '', 2, '0000-00-00', '0000-00-00', 0),
+(81, 'Kumasi', '', 6.698081, -1.6230404, '', 2, '0000-00-00', '0000-00-00', 0),
+(82, 'Tamale', '', 9.4051992, -0.8423986, '', 2, '0000-00-00', '0000-00-00', 0),
+(83, 'Sekondi-Takoradi', '', 4.927456, -1.7490216, '', 2, '0000-00-00', '0000-00-00', 0),
+(84, 'Ashaiman', '', 5.694385, -0.029529, '', 2, '0000-00-00', '0000-00-00', 0),
+(85, 'Sunyani', '', 7.3384389, -2.3309226, '', 2, '0000-00-00', '0000-00-00', 0);
 
 -- --------------------------------------------------------
 
@@ -418,7 +435,7 @@ ALTER TABLE `acteurs`
 -- AUTO_INCREMENT pour la table `activites`
 --
 ALTER TABLE `activites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `danger`
@@ -430,7 +447,7 @@ ALTER TABLE `danger`
 -- AUTO_INCREMENT pour la table `dangertype`
 --
 ALTER TABLE `dangertype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -442,7 +459,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT pour la table `pays`
 --
 ALTER TABLE `pays`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `roles`

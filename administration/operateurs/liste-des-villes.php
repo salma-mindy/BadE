@@ -62,176 +62,25 @@ require_once "../../database/db.php";
                                     </div>
                                 </div>
                             </div>
-
-                            <?php
-                                // On détermine sur quelle page on se trouve
-                                if(isset($_GET['page']) && !empty($_GET['page'])){
-                                    $currentPage = (int) strip_tags($_GET['page']);
-                                }else{
-                                    $currentPage = 1;
-                                }
-                                // On se connecte à là base de données
-                                require_once "../../database/db.php";
-                                $idUser = $_SESSION["id"];
-
-                                // On détermine le nombre total d'informations
-                                $sql = "SELECT COUNT(*) AS nb_ville FROM ville ";
-                                // On prépare la requête
-                                $query = $db->prepare($sql);
-                                // On exécute
-                                $query->execute();
-                                // On récupère le nombre d'informations
-                                $result = $query->fetch();
-                                $nbville = (int) $result['nb_ville'];
-                                // On détermine le nombre d'informations par page
-                                $parPage = 10;
-                                // On calcule le nombre de pages total
-                                $pages = ceil($nbville / $parPage);
-                                // Calcul de la première information de la page
-                                $premier = ($currentPage * $parPage) - $parPage;
-                                $sql = 'SELECT * FROM ville ORDER BY dateAjout  DESC LIMIT :premier, :parpage;';
-                                // On prépare la requête
-                                $query = $db->prepare($sql);
-
-                                $query->bindValue(':premier', $premier, PDO::PARAM_INT);
-                                $query->bindValue(':parpage', $parPage, PDO::PARAM_INT);
-
-                                // On exécute
-                                $query->execute();
-                                // On récupère les valeurs dans un tableau associatif
-                                $ville = $query->fetchAll(PDO::FETCH_ASSOC);
-                                $d_nb = count($ville);
-                                //var_dump($d_nb);exit();
-                            ?>
-                                <div class="card-body">
-                                    <?php if($d_nb === 0): ?>
-                                    <center>
-                                        <strong class="mt-4 mb-4">
-                                            Pas d'informations disponible
-                                        </strong>
-                                    </center>
-                                    <?php else: ?>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="p-1">
-                                                <div class="table-responsive">
-                                                    <table id="user_data" class="table table-striped table-sm table-bordered table-hover" style="color: #fff;">
-                                                        <thead>
-                                                            <tr class="text-center">
-                                                                <th>N</th>
-                                                                <th>Nom</th>
-                                                                <th>latitude</th>
-                                                                <th>longitude</th>
-                                                                <th>Pays</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                            <tbody class="text-center text-secondary">
-                                                                <?php $i=1;  foreach($ville as $ville) { ?>
-                                                                <tr>
-                                                                    <td>
-                                                                        <?php echo $i++ ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php
-                                                                            echo $ville['ville'];
-                                                                        ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php
-                                                                            echo $ville['lat'];
-                                                                        ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php 
-                                                                            echo $ville['lng'];
-                                                                         ?>
-                                                                    </td>
-                                                                    <td>
-                                                                    <?php 
-                                                                            $sql = 'SELECT COUNT(*) AS nb_ville FROM ville WHERE ville={echo '.$ville['id'].'}';
-                                                                            $query = $db->prepare($sql);
-                                                                            // On exécute
-                                                                            $query->execute();
-                                                                            // On récupère le nombre d'informations
-                                                                            $result = $query->fetch();
-                                                                            $nbville = (int) $result['nb_ville'];
-                                                                            echo  $nbville;
-                                                                         ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php
-                                                                            if ($idUser == $ville['idUtilisateur']) {
-                                                                               echo '<a href="ajouter-ville.php?id='.$ville['id'].'&operation=modification" type="button" class="text-primary">
-                                                                                <i class="fa fa-edit fa-lg"></i>
-                                                                            </a>&nbsp;&nbsp;
-                                                                            <a class="text-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter'.$ville["id"].'"><i class="fa fa-trash" aria-hidden="true"></i> </a>
-                                                                            ';?>
-                                                                            </td>
-                                                                            <?php
-                                                                            echo '<tr>
-                                                                            <div class="modal fade" id="exampleModalCenter'.$ville["id"].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title text-dark" id="exampleModalLongTitle'.$ville["id"].'">Suppression ville</h5>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body text-dark" >
-                                                                                    Etes vous sur de vouloir supprimer  ?
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
-                                                                                        <a href="traitement/delete-ville.php?id='.$ville["id"].'" class="btn btn-danger">Supprimer</a> 
-                                                                                </div>
-                                                    
-                                                                            </div>
-                                                                            </div>';
-                                                                        }
-                                                                        ?>
-                                                                </tr>
-                                                                        <?php }; ?>
-                                                            </tbody>
-                                                    </table>
-                                                    
-                                                    <nav aria-label="pagination" >
-                                                        
-                                                        <ul class="pagination justify-content-center">
-
-                                                            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "text-ville" ?>">
-                                                                <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
-                                                                <span aria-hidden="true">&laquo;</span>
-                                                                <span class="sr-only">Previous</span>
-                                                                </a>
-                                                            </li>
-
-                                                            <?php for($page = 1; $page <= $pages; $page++): ?>
-                                                                <li class="page-item <?= ($currentPage == $page) ? "active text-ville" : "" ?>">
-                                                                    <a class="page-link" href="?page=<?= $page ?>">
-                                                                        <?= $page ?>
-                                                                    </a>
-                                                                </li>
-                                                            <?php endfor; ?>
-
-                                                            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "text-ville" ?>">
-                                                                <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
-                                                                <span aria-hidden="true">&raquo;</span>
-                                                                <span class="sr-only">Next</span>
-                                                                </a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php endif ?>
+                                <div class="row container-fluid mt-2">
+                                    <section class="col-md-3"><p>Veuillez choisir un pays</p></section>
+                                    <section class="col-md">
+                                        <select name="pays" class="form-control" onchange="recupVilleTableau(this.value)">
+                                        <option value="">-- Pays --</option>
+                                        <?php
+                                             @$recuppays = $db->query("SELECT * FROM pays ORDER BY nom ASC")->fetchAll();
+                                             foreach ($recuppays as $pays)
+                                             {
+                                                echo '<option value="'.$pays['id'] .'">'.$pays['nom'] .'</option>';
+                                             }      
+                                        ?>
+                                        </select>
+                                    </section>
                                 </div>
+                                <div id="listVille">
+
+                                </div>
+                                
                         </div>
                     </div>
                     <!-- ./Contenue de la page -->
@@ -281,5 +130,36 @@ require_once "../../database/db.php";
                                 o.preventDefault()
                         })
                 }(jQuery);
+                 
+                function recupVilleTableau(str) {
+                    var xhttp;  
+                    if (str == "") {
+                        document.getElementById("listVille").innerHTML = "";
+                        return;
+                    }
+                    xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("listVille").innerHTML = this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", "traitement/ajax/list-ville.php?id="+str, true);
+                    xhttp.send();
+                    }
+                    function recupVilleTableau(str) {
+                    var xhttp;  
+                    if (str == "") {
+                        document.getElementById("listVille").innerHTML = "";
+                        return;
+                    }
+                    xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("listVille").innerHTML = this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", "traitement/ajax/list-ville.php?id="+str, true);
+                    xhttp.send();
+                    }
             </script>
     </body>
