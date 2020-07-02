@@ -105,11 +105,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 VALUES             (:descriptionEvent, :dateEvent, :source, :dangerType, :pays, :ville, :sexeVictime, :sexeResponsable, :idUtilisateur, :dateAjout, :dateModification)";
          
         if($stmt = $db->prepare($sql)){
-             
-            if($stmt->execute($newdanger)){
-               $errorMsg = "success";
-            } else{
-                $errorMsg = "error";
+
+            if ($stmt->execute($newdanger)) {
+                $newActivite = [
+                    ':activite'     => 'Enregistrement de danger',
+                    ':dateactivite' => date("Y-m-d H:i:s"),
+                    ':iduser'       => $_SESSION['id']
+                ];
+                var_dump($newActivite);
+                $activite = "INSERT  INTO activites (intituleActivite, periode, idUtilisateur) VALUES ( :activite, :dateactivite, :iduser)";
+                if ($resultat) {
+                var_dump($activite);
+                $rActivite = $db->prepare($activite)->execute($newActivite);
+                var_dump($rActivite);
+                if ($rActivite) {
+                    $_SESSION['alerte']= "success"; 
+                } else {
+                    $_SESSION['alerte']= "error";
+                }
+                
+                }
+                $_SESSION['alerte']= "error";
+            header ("location:../be-tdanger.php");
             }
         }
     }

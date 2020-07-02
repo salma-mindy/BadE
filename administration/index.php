@@ -69,6 +69,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if($_SESSION["role"] === "ROLE_ADMIN"){
                                 header("location: ./super-admin/home.php");
                             }elseif ($_SESSION["role"] === "ROLE_OPERATEUR"){
+                                $newActivite = [
+                                    ':activite'     => 'Connexion Opérateur',
+                                    ':dateactivite' => date("Y-m-d H:i:s"),
+                                    ':iduser'       => $_SESSION['id']
+                                ];
+                                $activite = "INSERT  INTO activites (intituleActivite, periode, idUtilisateur) VALUES ( :activite, :dateactivite, :iduser)";
+                                $rActivite = $db->prepare($activite)->execute($newActivite);
                                 header("location: ./operateurs/home.php");
                             }
                             elseif($_SESSION["role"] === "ROLE_SUPERVISEUR"){

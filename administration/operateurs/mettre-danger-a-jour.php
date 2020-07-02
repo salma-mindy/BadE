@@ -102,12 +102,28 @@ if(isset($_POST['update'])){
         ];
         $sql = "UPDATE danger SET description=:descriptionEvent, date=:dateEvent, source=:source, idDangerType=:dangerType, idPays=:pays, idVille=:ville, sexeVictime=:sexeVictime, sexeResponsable=:sexeResponsable, dateModification=:dateModification WHERE id=:idDanger";
         $resultat = $db->prepare($sql)->execute($majdanger);
-        if($resultat){
-            header("location: liste-des-danger-ajouter.php");
-            $errorMsg = "success";
-        } else{
-            $errorMsg = "error";
-        }
+        if ($result) {
+          $newActivite = [
+              ':activite'     => 'Mise à jour de danger',
+              ':dateactivite' => date("Y-m-d H:i:s"),
+              ':iduser'       => $_SESSION['id']
+          ];
+          var_dump($newActivite);
+          $activite = "INSERT  INTO activites (intituleActivite, periode, idUtilisateur) VALUES ( :activite, :dateactivite, :iduser)";
+          if ($resultat) {
+          var_dump($activite);
+          $rActivite = $db->prepare($activite)->execute($newActivite);
+          var_dump($rActivite);
+          if ($rActivite) {
+              $_SESSION['alerte']= "success"; 
+          } else {
+              $_SESSION['alerte']= "error";
+          }
+          
+          }
+          $_SESSION['alerte']= "error";
+      header ("location:../be-tdanger.php");
+      }
         
     }
     
