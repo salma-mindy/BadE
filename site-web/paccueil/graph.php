@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -18,19 +17,19 @@
     <div class="row">
 
     </div>
-    <div class="row mt-5">
+    <div class="row mt-1">
         <div class="col-sm-0 col-md-2 col-lg-3"></div>
-        <div class="col-xs-8 col-md-8 col-lg-6">
+        <div class="col-sm-12 col-md-8 col-lg-6">
             <div class="text-center mb-5">
                 <a href="accueil.php">
-                    <img src="img/logo.png" alt="logo" style="width: 400px; height: auto;">
+                    <img src="img/logo.png" alt="logo" style="width: 200px; heigth: auto ">
                 </a>
             </div>
 
             <!-- debut la barre de recherche -->
-           <form action="" class="row mb-4" method="POST">
+           <form action="" class="row mb-4">
                 <input class="form-control" name="search" type="text" value="" id="search_user" placeholder="Rechercher un évènement" style="width: 92%;">
-                <button class="btn p-0 rounded-0" name="submit" type="submit" value="submit" style="width: 8%; background: gray; color: #fff; font-size: 23px;">
+                <button class="btn p-0 rounded-0" name="submit" type="submit" value="" style="width: 8%; background: gray; color: #fff; font-size: 15px;">
                     <i class="fas fa-search"></i>
                 </button>
            </form>
@@ -41,27 +40,25 @@
             <div class="col">
                 <ul class="row list-inline justify-content-center" >
                     <li class="mx-3"><a href="resultats_recherche.php"><i class="fas mr-1 fa-search"></i>Tous</a></li>
-                    <li class="mx-3"><a href="graph.php"><i class="fas mr-1 fa-chart-line"></i>Graph</a></li>
+                    <li class="mx-3"><a id="active" href="graph.php"><i class="fas mr-1 fa-chart-line"></i>Graph</a></li>
                     <li class="mx-3"><a href="tableaux.php"><i class="fas mr-1 fa-table"></i>Tableaux</a></li>
-                    <li class="mx-3"><a href="maps.php"><i class="fas mr-1 fa-map-marked-alt"></i>Maps</a></li>
+                    <li class="mx-3"><a href="map/maps.php"><i class="fas mr-1 fa-map-marked-alt"></i>Maps</a></li>
                 </ul>
             </div>
+            
             <!-- fin liens en bas de la barre -->
         </div>  
     </div>
+    <hr>
+
+
+    <!-- debut section resultas de recherches //all -->
+
+        <h1>Les graphs ici</h1>
+
+    <!-- fin section resultas de recherches -->
+
     
-<div>
-<?php
-include("scripttab.php");
-?>
-
-</div>
-
-    <div class="row">
-        <div class="col pt-1" id="footer" style="margin-top:64vh;">
-            <p class="text-center">Copyright 2020 - Bad-Event</p>
-        </div>
-    </div>
 </div>
 
 
@@ -69,4 +66,8 @@ include("scripttab.php");
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
 
