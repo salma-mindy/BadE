@@ -58,7 +58,7 @@
 <div class="row">
 	<div class="col">
 		<?php
-		include("scripttab.php");
+		include("scriptmap.php");
 		?>
 	</div>
 
