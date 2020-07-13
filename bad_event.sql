@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 02 juil. 2020 à 05:10
+-- Généré le : mar. 14 juil. 2020 à 00:30
 -- Version du serveur :  10.4.11-MariaDB
--- Version de PHP : 7.4.6
+-- Version de PHP : 7.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,7 +48,8 @@ INSERT INTO `acteurs` (`id`, `intitule`, `dateModification`, `dateAjout`, `idUti
 (9, 'femme', NULL, NULL, 0),
 (10, 'homme', NULL, NULL, 0),
 (12, 'azerty', '2020-07-01 02:45:52', '2020-07-01 02:45:52', 39),
-(20, 'azerty1', '2020-07-01 03:31:16', '2020-07-01 03:31:16', 39);
+(20, 'azerty1', '2020-07-01 03:31:16', '2020-07-01 03:31:16', 39),
+(21, 'Gamin', '2020-07-04 20:12:25', '2020-07-04 20:12:25', 38);
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,24 @@ CREATE TABLE `activites` (
 INSERT INTO `activites` (`id`, `intituleActivite`, `periode`, `idUtilisateur`) VALUES
 (1, 'Mise à jour de Ville', '2020-07-02 04:26:49', 39),
 (2, 'Mise à jour de Ville', '2020-07-02 04:27:24', 39),
-(3, 'Suppression de type de danger', '2020-07-02 05:08:31', 39);
+(3, 'Suppression de type de danger', '2020-07-02 05:08:31', 39),
+(4, 'Connexion Opérateur', '2020-07-03 14:27:11', 39),
+(5, 'Connexion Opérateur', '2020-07-03 15:19:40', 39),
+(6, 'Enregistrement de pays', '2020-07-04 20:11:10', 38),
+(7, 'Enregistrement de ville', '2020-07-04 20:11:55', 38),
+(8, 'Ajout utilisateur', '2020-07-04 20:16:17', 38),
+(9, 'modification des infos dun utilisateur', '2020-07-04 20:16:42', 38),
+(10, 'Modification dinfo personnel', '2020-07-04 20:17:33', 38),
+(11, 'ModifiCATION DE LA PHOTO DE PROFIL', '2020-07-04 20:17:49', 38),
+(12, 'Ajout utilisateur', '2020-07-09 18:18:33', 2),
+(13, 'Ajout utilisateur', '2020-07-09 18:20:21', 2),
+(14, 'modification des infos dun utilisateur', '2020-07-10 02:28:50', 2),
+(15, 'modification des infos dun utilisateur', '2020-07-10 02:29:03', 2),
+(16, 'Ajout utilisateur', '2020-07-10 02:30:34', 2),
+(17, 'Suppression de type de danger', '2020-07-10 11:43:55', 41),
+(18, 'Enregistrement de pays', '2020-07-10 11:45:18', 41),
+(19, 'Enregistrement de ville', '2020-07-10 11:46:09', 41),
+(20, 'Suppression de pays', '2020-07-10 11:47:43', 41);
 
 -- --------------------------------------------------------
 
@@ -99,7 +117,11 @@ CREATE TABLE `danger` (
 
 INSERT INTO `danger` (`id`, `description`, `date`, `idDangerType`, `idPays`, `source`, `idVille`, `sexeVictime`, `sexeResponsable`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
 (1, 'Grand spécialiste du genre, Udemy propose de nombreuses formations sur Python dans son catalogue. Assurées par des professionnels expérimentés, ces cours en vidéo sont accessibles soit à des débutants, soit à des des développeurs initiés, et s’appuient sur de nombreux exercices permettant de mettre immédiatement la théorie en pratique. Comme toujours, des extraits sont disponibles en visionnage gratuit, pour se faire une idée du contenu et du formateur. Offrant un accès illimité en vidéo à la demande (VOD), à la fois sur ordinateur, TV et mobile, toutes ces formations bénéficient en outre d’une garantie « Satisfait ou remboursé » de 30 jours, gage de qualité et de sérieux.', '2020-06-04', 1, 1, 'https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp', 22, 4, 5, '2020-06-30 03:40:10', '2020-06-30 15:51:29', 39),
-(5, 'Totalisant plus de 13 heures de vidéo réparties en 43 articles, ce cours se présente comme une formation complète et progressive à Python. Spécialiste de la programmation, le formateur aborde tous les aspects de ce langage très prisé, des bases essentielles aux concepts les plus évolués, en s’appuyant sur de nombreux quiz et exercices pratiques permettant de vérifier immédiatement les connaissances acquises. Du choix de l’environnement de développement (Sublime Text, Visual Studio Code, PyCharm, Anaconda…) et de la plateforme (Windows, macOS ou Linux) aux opérateurs ternaires, en passant par les packages, les fonctions, les listes ou la gestion d’erreurs avec des exceptions, tous les aspects de la programmation objet en Python sont passés en revue avec force d’exemples et d’explications. Plusieurs projets concrets sont proposés dans cette formation réalisée avec la version 3.7 qui s’adresse aussi bien aux débutants motivés qu’aux développeurs confirmés souhaitant apprendre un nouveau langage.', '2020-06-03', 3, 2, 'https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp', 83, 5, 6, '2020-06-30 04:42:27', '2020-06-30 04:42:27', 39);
+(5, 'Totalisant plus de 13 heures de vidéo réparties en 43 articles, ce cours se présente comme une formation complète et progressive à Python. Spécialiste de la programmation, le formateur aborde tous les aspects de ce langage très prisé, des bases essentielles aux concepts les plus évolués, en s’appuyant sur de nombreux quiz et exercices pratiques permettant de vérifier immédiatement les connaissances acquises. Du choix de l’environnement de développement (Sublime Text, Visual Studio Code, PyCharm, Anaconda…) et de la plateforme (Windows, macOS ou Linux) aux opérateurs ternaires, en passant par les packages, les fonctions, les listes ou la gestion d’erreurs avec des exceptions, tous les aspects de la programmation objet en Python sont passés en revue avec force d’exemples et d’explications. Plusieurs projets concrets sont proposés dans cette formation réalisée avec la version 3.7 qui s’adresse aussi bien aux débutants motivés qu’aux développeurs confirmés souhaitant apprendre un nouveau langage.', '2020-06-03', 3, 2, 'https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp', 83, 5, 6, '2020-06-30 04:42:27', '2020-06-30 04:42:27', 39),
+(6, 'L\'OMS a réussi à lister une série d\'événements responsables de la violence conjugale, exercée surtout contre les femmes, quel que soit le pays concerné, en voie de développement, ou développés. \"En voici des exemples :', '2020-07-25', 9, 1, 'https://sante.lefigaro.fr/social/droit/violences-conjugales/quelles-sont-causes-violence-conjugale', 79, 9, 10, '2020-07-04 20:14:17', '2020-07-04 20:14:17', 38),
+(7, 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\r\nqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\r\nqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\r\nqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', '2020-07-04', 10, 1, 'Abidjan.net', 28, 7, 10, '2020-07-04 20:27:24', '2020-07-04 20:27:24', 38),
+(8, 'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', '2020-07-01', 11, 1, 'Linfodrome', 28, 10, 10, '2020-07-10 02:38:51', '2020-07-10 11:40:43', 41),
+(9, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', '2020-07-10', 9, 1, 'Koaci', 19, 10, 8, '2020-07-10 11:43:27', '2020-07-10 11:46:53', 41);
 
 -- --------------------------------------------------------
 
@@ -137,7 +159,8 @@ INSERT INTO `dangertype` (`id`, `intitule`, `dateAjout`, `dateModification`, `id
 (16, 'électrocution', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (17, 'bavure policière', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (18, 'Vol à main armée ( braquage, Coupeur de route)', '2020-07-01 13:47:05', '2020-07-01 13:47:05', 39),
-(22, 'Vol à main armée ( braquage, Coupeur de route)', '2020-07-01 14:19:46', '2020-07-01 14:19:46', 39);
+(22, 'Vol à main armée ( braquage, Coupeur de route)', '2020-07-01 14:19:46', '2020-07-01 14:19:46', 39),
+(30, 'Assasinat', '2020-07-04 20:14:55', '2020-07-04 20:14:55', 38);
 
 -- --------------------------------------------------------
 
@@ -147,11 +170,23 @@ INSERT INTO `dangertype` (`id`, `intitule`, `dateAjout`, `dateModification`, `id
 
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
-  `objetMessage` varchar(255) NOT NULL,
-  `contenu` text NOT NULL,
+  `nom` varchar(255) NOT NULL,
+  `contenuMsg` text NOT NULL,
   `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `message`
+--
+
+INSERT INTO `message` (`id`, `nom`, `contenuMsg`, `email`, `subject`, `date`) VALUES
+(1, 'Akaa', 'TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST', 'shellyaka998@gmail.com', 'test', '2020-07-13'),
+(2, 'Akaa', 'un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un', 'shellyaka998@gmail.com', 'test', '2020-07-13'),
+(3, 'Akaa', 'un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un un', 'shellyaka998@gmail.com', 'test', '2020-07-13'),
+(4, 'Melis', 'simplon', 'lora@gmail.com', 'test', '2020-07-13'),
+(5, 'Akaa', 'test un test', 'shellyaka998@gmail.com', 'test', '2020-07-13');
 
 -- --------------------------------------------------------
 
@@ -177,7 +212,8 @@ CREATE TABLE `pays` (
 
 INSERT INTO `pays` (`id`, `nom`, `descriptionPays`, `lat`, `lng`, `img`, `dateAjout`, `dateModification`, `idUtilisateur`) VALUES
 (1, 'Côte d\'Ivoire', '', 0, 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(2, 'Ghana', '', 0, 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
+(2, 'Ghana', '', 0, 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(4, 'Maeville', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 6.7157, -3.48013, '.png', '2020-07-04 20:11:10', '2020-07-04 20:11:10', 38);
 
 -- --------------------------------------------------------
 
@@ -238,8 +274,12 @@ INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `genre`, `contact`, `adresse`
 (35, 'Opérateu', 'koné', 'Masculin', '05285478', 'Bouaflé, CI', 'kouame@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
 (36, 'Meli', 'Anoa Melissa', 'Feminin', '43009312', 'Niangon, Yopougon', 'melissa@gmail.com', '$2y$10$z9cEY5Dq4CRZ3debUiBGxeVgIr/Njilo5aJ09d7CXCEqjxgbsCYCe', '2020-06-20 15:45:32', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
 (37, 'test2', 'Loriane', 'Feminin', '85154865', 'Niangon, Yopougon', 'teste0@gmail.com', '$2y$10$3Ax1NMsGTUIR33V.ONTLI.oAXhXrbbggFX2KOPJ6Onkv0um/JI7cO', '2020-06-20 15:58:07', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
-(38, 'Opérateu', 'koné', 'Masculin', '05285478', 'Bouaflé, CI', 'kouame@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
-(39, 'KOYA', 'Téan benoit', 'Masculin', '08880004', 'Abobo', 'tean.koya@gmail.com', '$2y$10$8VIa4CZ8dOZFeW7QIStJyeuTacQu9QhQ5DJ8K0vioV118NNH5iYOG', '2020-06-27 08:08:50', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0);
+(38, 'Akaa', 'Raissa', 'Feminin', '+225 87147883', 'Niangon, Yopougon', 'lora@gmail.com', '$2y$10$Ru6v/jJ6kyt8SnmXLT3P8e/GHpn05Au6ivK/v5BdySHU5Ucio/Emu', '2020-06-21 09:03:44', 2, '38.png', '', '', '', '2020-07-04 20:17:33', 0),
+(39, 'KOYA', 'Téan benoit', 'Masculin', '08880004', 'Abobo', 'tean.koya@gmail.com', '$2y$10$8VIa4CZ8dOZFeW7QIStJyeuTacQu9QhQ5DJ8K0vioV118NNH5iYOG', '2020-06-27 08:08:50', 2, NULL, '', '', '', '0000-00-00 00:00:00', 0),
+(40, 'Akaa', 'Anoa', 'feminin', '+225 87147883', 'Niangon, Yopougon', 'melimeli01@gmail.com', '$2y$10$DWF966Xzd8PeXsOrqQGWg.7f36u9jU3SJo3mwz37G9AkE5lqBsA/e', '2020-07-04 18:16:17', 2, NULL, 'oui', 'oui', 'oui', '0000-00-00 00:00:00', 38),
+(41, 'Kouame', 'Salma', 'feminin', '+225 87147883', 'Niangon, Yopougon', 'salma@gmail.com', '$2y$10$5sL3yNi.DhngMve2NENsl.4UAY2UEzGL9OOiHtnnV6fC72B/J7XUe', '2020-07-09 16:18:33', 2, NULL, 'oui', 'oui', 'oui', '0000-00-00 00:00:00', 2),
+(42, 'Coco', 'Channel', 'feminin', '+225 87147883', 'Niangon, Yopougon', 'channel@gmail.com', '$2y$10$ra9BOb1u7KmMeRsgzlVo8O61NipSxu/DOetjzsmw/YmQVaD.l0EYi', '2020-07-09 16:20:21', 3, NULL, 'oui', 'oui', 'oui', '0000-00-00 00:00:00', 2),
+(43, 'Bad', 'Event', 'masculin', '84-147-882', 'Niangon, Yopougon', 'badevent@gmail.com', '$2y$10$Won2nuVGhzEJfqtP/FHyg.GWyzIIehUsyKqXYHc//leg8SAbAUZwu', '2020-07-10 00:30:34', 1, NULL, 'oui', 'oui', 'oui', '0000-00-00 00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -334,7 +374,9 @@ INSERT INTO `ville` (`id`, `ville`, `descriptionVille`, `lat`, `lng`, `img`, `pa
 (82, 'Tamale', '', 9.4051992, -0.8423986, '', 2, '0000-00-00', '0000-00-00', 0),
 (83, 'Sekondi-Takoradi', '', 4.927456, -1.7490216, '', 2, '0000-00-00', '0000-00-00', 0),
 (84, 'Ashaiman', '', 5.694385, -0.029529, '', 2, '0000-00-00', '0000-00-00', 0),
-(85, 'Sunyani', '', 7.3384389, -2.3309226, '', 2, '0000-00-00', '0000-00-00', 0);
+(85, 'Sunyani', '', 7.3384389, -2.3309226, '', 2, '0000-00-00', '0000-00-00', 0),
+(86, 'Maeville', 'azzzzzzzzzzzzzzzzzzzzz', 0.000001, 0.000001, 'Screenshot (10).png', 1, '2020-07-04', '2020-07-04', 38),
+(87, 'dd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 0.000001, -0.000001, 'bad_event.PNG', 1, '2020-07-10', '2020-07-10', 41);
 
 -- --------------------------------------------------------
 
@@ -429,37 +471,37 @@ ALTER TABLE `visiteurs`
 -- AUTO_INCREMENT pour la table `acteurs`
 --
 ALTER TABLE `acteurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `activites`
 --
 ALTER TABLE `activites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `danger`
 --
 ALTER TABLE `danger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `dangertype`
 --
 ALTER TABLE `dangertype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `pays`
 --
 ALTER TABLE `pays`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `roles`
@@ -471,13 +513,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `ville`
 --
 ALTER TABLE `ville`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- Contraintes pour les tables déchargées
