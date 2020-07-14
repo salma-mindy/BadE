@@ -1,0 +1,30 @@
+#footer{
+    position: relative;
+    bottom: 0;
+    background-color: #000;
+    color: #fff;
+    height: 30px;
+    cursor: pointer;
+}
+
+#search_user{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+li:hover a{
+    color: red;
+}
+
+ul li a{
+    color: #000;
+}
+
+hr{
+    margin-top: 0px;
+}
+
+#active{
+    color: red;
+    text-decoration: underline;
+}
