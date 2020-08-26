@@ -17,7 +17,7 @@ $ville_err = $sexeVictime_err = $sexeResponsable_err = "";
 $errorMsg = "";
 
 if(isset($_POST['update'])){
- var_dump($_POST);
+ //var_dump($_POST);
     $idUser = $_SESSION["id"];
     echo ' not update';
     
@@ -70,14 +70,7 @@ if(isset($_POST['update'])){
     }
     
     // Vérification des erreurs de saisie avant l'insertion dans la base de données
-    var_dump(empty($description_err));
-    var_dump(empty($date_err));
-    var_dump(empty($source_err));
-    var_dump(empty($dangerType_err));
-    var_dump(empty($pays_err));
-    var_dump(empty($ville_err));
-    var_dump(empty($sexeVictime_err));
-    var_dump(empty($sexeResponsable_err));
+    //
     if(empty($description_err) && 
        empty($date_err) && 
        empty($source_err) &&
@@ -86,7 +79,7 @@ if(isset($_POST['update'])){
        empty($ville_err) &&
        empty($sexeVictime_err) &&
        empty($sexeResponsable_err)){
-        echo 'update';
+        //echo 'update';
         // Préparons une instruction d'insertion
         $majdanger =[
           'descriptionEvent'  => $description,
@@ -102,18 +95,18 @@ if(isset($_POST['update'])){
         ];
         $sql = "UPDATE danger SET description=:descriptionEvent, date=:dateEvent, source=:source, idDangerType=:dangerType, idPays=:pays, idVille=:ville, sexeVictime=:sexeVictime, sexeResponsable=:sexeResponsable, dateModification=:dateModification WHERE id=:idDanger";
         $resultat = $db->prepare($sql)->execute($majdanger);
-        if ($result) {
+        if ($resultat) {
           $newActivite = [
               ':activite'     => 'Mise à jour de danger',
               ':dateactivite' => date("Y-m-d H:i:s"),
               ':iduser'       => $_SESSION['id']
           ];
-          var_dump($newActivite);
+          //var_dump($newActivite);
           $activite = "INSERT  INTO activites (intituleActivite, periode, idUtilisateur) VALUES ( :activite, :dateactivite, :iduser)";
           if ($resultat) {
-          var_dump($activite);
+          //var_dump($activite);
           $rActivite = $db->prepare($activite)->execute($newActivite);
-          var_dump($rActivite);
+          //var_dump($rActivite);
           if ($rActivite) {
               $_SESSION['alerte']= "success"; 
           } else {
@@ -122,7 +115,7 @@ if(isset($_POST['update'])){
           
           }
           $_SESSION['alerte']= "error";
-      header ("location:../be-tdanger.php");
+      header ("location:liste-des-danger-ajouter.php");
       }
         
     }

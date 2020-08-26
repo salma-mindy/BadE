@@ -10,10 +10,10 @@ if(!isset($_SESSION["connecter"]) || $_SESSION["connecter"] !== true){
 
 require_once "../../database/db.php";
 
-$description = $date = $source = $dangerType = $pays = "";
+$description = $date = $source = $dangerType = $pays = $preciLong = $preciLat = "";
 $ville = $sexeVictime = $sexeResponsable = "";
 $ville_err = $sexeVictime_err = $sexeResponsable_err = "";
-$description_err = $date_err = $source_err_err = $dangerType_err = $pays_err = "";
+$description_err = $date_err = $source_err_err = $dangerType_err = $pays_err = $preciLong_err = $preciLat_err = "";
 $errorMsg = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -56,6 +56,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $pays = trim($_POST["paysId"]);
     }
+    if(empty(trim($_POST["preciLong"]))){
+        $preciLong_err = "Veuillez ajouter la longitude précise.";     
+    } else{
+        $preciLong = trim($_POST["preciLong"]);
+    }
+    if(empty(trim($_POST["preciLat"]))){
+        $preciLat_err = "Veuillez ajouter la latitude précise.";     
+    } else{
+        $preciLat = trim($_POST["preciLat"]);
+    }
 
     if(empty(trim($_POST["ville"]))){
         $ville_err = "Veuillez selectionner la ville.";     
@@ -80,6 +90,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
        empty($source_err) &&
        empty($dangerType_err) &&
        empty($pays_err) &&
+       empty($preciLong_err) &&
+       empty($preciLat_err) &&
        empty($ville_err) &&
        empty($sexeVictime_err) &&
        empty($sexeResponsable_err)){
@@ -87,11 +99,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         //stockage des données dans un tableau
 
         $newdanger =[
-            'descriptionEvent'       => $description,
+            'descriptionEvent'  => $description,
             'dateEvent'         => $date,
             'source'            => $source,
             'dangerType'        => $dangerType,
             'pays'              => $pays,
+            'preciLong'         => $preciLong,
+            'preciLat'          => $preciLat,
             'ville'             => $ville,
             'sexeVictime'       => $sexeVictime,
             'sexeResponsable'   => $sexeResponsable,
@@ -101,8 +115,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         ];
         
         // Préparons une instruction d'insertion
-        $sql = "INSERT INTO danger (description,  date,   source, idDangerType, idPays, idVille, sexeVictime, sexeResponsable, idUtilisateur, dateAjout, dateModification) 
-                VALUES             (:descriptionEvent, :dateEvent, :source, :dangerType, :pays, :ville, :sexeVictime, :sexeResponsable, :idUtilisateur, :dateAjout, :dateModification)";
+        $sql = "INSERT INTO danger (description,  date,   source, idDangerType, idPays, preciLong, preciLat, idVille, sexeVictime, sexeResponsable, idUtilisateur, dateAjout, dateModification) 
+                VALUES             (:descriptionEvent, :dateEvent, :source, :dangerType, :pays, :preciLong, :preciLat, :ville, :sexeVictime, :sexeResponsable, :idUtilisateur, :dateAjout, :dateModification)";
          
         if($stmt = $db->prepare($sql)){
 
@@ -115,9 +129,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 var_dump($newActivite);
                 $activite = "INSERT  INTO activites (intituleActivite, periode, idUtilisateur) VALUES ( :activite, :dateactivite, :iduser)";
                 if ($resultat) {
-                var_dump($activite);
+                // var_dump($activite);
                 $rActivite = $db->prepare($activite)->execute($newActivite);
-                var_dump($rActivite);
+                // var_dump($rActivite);
                 if ($rActivite) {
                     $_SESSION['alerte']= "success"; 
                 } else {
@@ -284,6 +298,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                       </div>
                     </div>
                   </div>
+
+                <!-- champ preciLong & preciLat-->
+                <div class="form-group row mb-2">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input type="text" class="form-control" id="preciLong" name="preciLong" placeholder="Indiquez la longitude précise">
+                        <small style="color: #ff1300 !important">
+                            <center>
+                                <i><?php echo $preciLong_err; ?></i>
+                            </center>
+                        </small>
+                    </div> 
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input type="text" class="form-control" id="preciLat" name="preciLat" placeholder="Indiquez la latitude précise">
+                        <small style="color: #ff1300 !important">
+                            <center>
+                                <i><?php echo $preciLat_err; ?></i>
+                            </center>
+                        </small>
+                    </div> 
+                </div>
+                <!-- champ preciLong & preciLat-->
+
                 <!-- champ description du danger-->
                 <div class="">
                     <h5 style="color: #ffc500">Informations générale</h5>
